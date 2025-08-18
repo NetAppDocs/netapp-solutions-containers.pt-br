@@ -1,0 +1,37 @@
+---
+sidebar: sidebar 
+permalink: tanzu/vtwn-overview-netapp.html 
+keywords: NetApp, ONTAP, Element, Storage, Tanzu, VMware Tanzu with NetApp ONTAP 
+summary: A NetApp tem diversas plataformas de armazenamento qualificadas com Trident e Trident Protect para provisionar, proteger e gerenciar dados para aplicativos em contêineres e, assim, ajudar a definir e maximizar o rendimento do DevOps. 
+---
+= Visão geral dos sistemas de armazenamento NetApp
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+:solution_name: VMware Tanzu with NetApp
+:ontap_page_link: vtwn-netapp-ontap.html
+
+
+[role="lead"]
+A NetApp tem diversas plataformas de armazenamento qualificadas com Trident e Trident Protect para provisionar, proteger e gerenciar dados para aplicativos em contêineres e, assim, ajudar a definir e maximizar o rendimento do DevOps.
+
+[role="normal"]
+A NetApp tem diversas plataformas de armazenamento qualificadas com o Trident para provisionar, proteger e gerenciar dados para aplicativos em contêineres.
+
+image:redhat-openshift-043.png["Figura mostrando diálogo de entrada/saída ou representando conteúdo escrito"]
+
+* Os sistemas AFF e FAS executam o NetApp ONTAP e fornecem armazenamento para casos de uso baseados em arquivo (NFS) e em bloco (iSCSI).
+* O Cloud Volumes ONTAP e o ONTAP Select oferecem os mesmos benefícios na nuvem e no espaço virtual, respectivamente.
+* O Google Cloud NetApp Volumes (AWS/GCP) e o Azure NetApp Files fornecem armazenamento baseado em arquivos na nuvem.
+
+
+
+NOTE: Cada sistema de armazenamento no portfólio da NetApp pode facilitar tanto o gerenciamento de dados quanto a movimentação entre sites locais e a nuvem, para que seus dados estejam onde seus aplicativos estão.
+
+As páginas a seguir contêm informações adicionais sobre os sistemas de armazenamento NetApp validados na solução {solution_name}:
+
+* link:vtwn-netapp-ontap.html["NetApp ONTAP"]
+

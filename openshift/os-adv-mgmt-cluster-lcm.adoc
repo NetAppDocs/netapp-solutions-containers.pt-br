@@ -1,0 +1,43 @@
+---
+sidebar: sidebar 
+permalink: openshift/os-adv-mgmt-cluster-lcm.html 
+keywords: OpenShift, OCP, Trident, NetApp ONTAP, ONTAP, Trident, Red Hat OpenShift, Advanced Cluster Management, Advanced Cluster Management for Kubernetes 
+summary: Gerenciamento avançado de cluster para Kubernetes no Red Hat OpenShift com NetApp 
+---
+= Gerenciamento do ciclo de vida do cluster
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+Para gerenciar diferentes clusters OpenShift, você pode criá-los ou importá-los para o Advanced Cluster Management.
+
+. Primeiro navegue até Automatizar infraestruturas > Clusters.
+. Para criar um novo cluster OpenShift, conclua as seguintes etapas:
++
+.. Criar uma conexão com provedor: navegue até Conexões de provedor e clique em Adicionar uma conexão, forneça todos os detalhes correspondentes ao tipo de provedor selecionado e clique em Adicionar.
++
+image:redhat-openshift-075.png["Adicionar conexão de provedor"]
+
+.. Para criar um novo cluster, navegue até Clusters e clique em Adicionar um cluster > Criar um cluster.  Forneça os detalhes do cluster e do provedor correspondente e clique em Criar.
++
+image:redhat-openshift-076.png["Adicionar clusters"]
+
+.. Após a criação do cluster, ele aparece na lista de clusters com o status Pronto.
+
+
+. Para importar um cluster existente, conclua as seguintes etapas:
++
+.. Navegue até Clusters e clique em Adicionar um cluster > Importar um cluster existente.
+.. Insira o nome do cluster e clique em Salvar importação e gerar código.  Um comando para adicionar o cluster existente é exibido.
+.. Clique em Copiar comando e execute o comando no cluster a ser adicionado ao cluster do hub.  Isso inicia a instalação dos agentes necessários no cluster e, após a conclusão desse processo, o cluster aparece na lista de clusters com o status Pronto.
++
+image:redhat-openshift-077.png["Importar cluster existente"]
+
+
+
+. Depois de criar e importar vários clusters, você pode monitorá-los e gerenciá-los a partir de um único console.
+

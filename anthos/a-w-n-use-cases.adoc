@@ -1,0 +1,19 @@
+---
+sidebar: sidebar 
+permalink: anthos/a-w-n-use-cases.html 
+keywords: validation, use-cases, application, multitenancy, virtualization, 
+summary: Os exemplos fornecidos nesta página são validações de soluções e casos de uso para o Anthos com NetApp. 
+---
+= Validação de Soluções e Casos de Uso
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+Os exemplos fornecidos nesta página são validações de soluções e casos de uso para o Anthos com NetApp.
+
+link:anthos-deploy-app-cloud-console.html["Instalar um aplicativo usando o Google Cloud Console"]

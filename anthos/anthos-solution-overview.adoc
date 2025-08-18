@@ -1,0 +1,89 @@
+---
+sidebar: sidebar 
+permalink: anthos/anthos-solution-overview.html 
+keywords: NVA-1165, Anthos, GKE, Netapp, Trident 
+summary: Este documento de referência fornece validação de implantação da solução Anthos com NetApp , implantada em vários ambientes de data center, conforme validado pela NetApp e nossos parceiros de engenharia. 
+---
+= NVA-1165: Anthos com NetApp
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+Banu Sundhar e Suresh Thoppay, NetApp
+
+[role="lead"]
+Este documento de referência fornece validação de implantação da solução Anthos com NetApp pela NetApp e nossos parceiros de engenharia quando ela é implantada em vários ambientes de data center.  Ele também detalha a integração de armazenamento com sistemas de armazenamento NetApp usando o orquestrador de armazenamento Trident para o gerenciamento de armazenamento persistente.  Por fim, exploramos e documentamos uma série de validações de soluções e casos de uso do mundo real.
+
+
+
+== Casos de uso
+
+A solução Anthos com NetApp foi arquitetada para oferecer valor excepcional aos clientes com os seguintes casos de uso:
+
+* Fácil de implantar e gerenciar o ambiente Anthos implantado usando o fornecido `bmctl` ferramenta em metal nu ou o `gkectl` ferramenta no VMware vSphere.
+* Poder combinado de contêineres corporativos e cargas de trabalho virtualizadas com o Anthos implantado virtualmente no vSphere ou em bare metal com https://cloud.google.com/anthos/clusters/docs/bare-metal/1.9/how-to/vm-workloads["cubovirtual"^] .
+* Configuração do mundo real e casos de uso destacando os recursos do Anthos quando usado com o armazenamento NetApp e o Trident, o orquestrador de armazenamento de código aberto para Kubernetes.
+
+
+
+
+== Valor comercial
+
+As empresas estão adotando cada vez mais práticas de DevOps para criar novos produtos, encurtar ciclos de lançamento e adicionar novos recursos rapidamente.  Devido à sua natureza ágil inata, contêineres e microsserviços desempenham um papel crucial no suporte às práticas de DevOps.  No entanto, praticar DevOps em escala de produção em um ambiente corporativo apresenta seus próprios desafios e impõe certos requisitos à infraestrutura subjacente, como os seguintes:
+
+* Alta disponibilidade em todas as camadas da pilha
+* Facilidade de procedimentos de implantação
+* Operações e atualizações não disruptivas
+* Infraestrutura programável e orientada por API para acompanhar a agilidade dos microsserviços
+* Multilocação com garantias de desempenho
+* A capacidade de executar cargas de trabalho virtualizadas e em contêineres simultaneamente
+* A capacidade de dimensionar a infraestrutura de forma independente com base nas demandas da carga de trabalho
+
+
+A solução Anthos com NetApp reconhece esses desafios e apresenta uma solução que ajuda a lidar com cada preocupação implementando a implantação totalmente automatizada do Anthos no local no ambiente de data center escolhido pelo cliente.
+
+
+
+== Visão geral da tecnologia
+
+A solução Anthos com NetApp é composta pelos seguintes componentes principais:
+
+
+
+=== Anthos no local
+
+O Anthos On Prem é uma plataforma Kubernetes empresarial totalmente suportada que pode ser implantada no hipervisor VMware vSphere ou em uma infraestrutura bare metal de sua escolha.
+
+Para obter mais informações sobre o Anthos, consulte o site do Anthos localizado https://cloud.google.com/anthos["aqui"^] .
+
+
+
+=== Sistemas de armazenamento NetApp
+
+A NetApp tem vários sistemas de armazenamento perfeitos para data centers empresariais e implantações de nuvem híbrida.  O portfólio da NetApp inclui NetApp ONTAP, Cloud Volumes ONTAP, Google Cloud NetApp Volumes, Azure NetApp Files, FSx ONTAP para sistemas de armazenamento NetApp ONTAP , todos os quais podem fornecer armazenamento persistente para aplicativos em contêineres.
+
+Para mais informações, visite o site da NetApp https://www.netapp.com["aqui"] .
+
+
+
+=== Integrações de armazenamento NetApp
+
+O Trident é um orquestrador de armazenamento de código aberto e totalmente compatível para contêineres e distribuições Kubernetes, incluindo o Anthos.
+
+Para mais informações, visite o site da Trident https://docs.netapp.com/us-en/trident/index.html["aqui"] .
+
+
+
+== Opções de configuração avançadas
+
+Esta seção é dedicada às personalizações que usuários do mundo real provavelmente precisariam realizar ao implantar esta solução em produção, como criar um registro de imagem privada dedicado ou implantar instâncias personalizadas do balanceador de carga.
+
+
+
+== Matriz de suporte atual para versões validadas
+
+Ver https://cloud.google.com/anthos/docs/resources/partner-storage#netapp["aqui"] para a matriz de suporte para versões validadas.

@@ -1,0 +1,28 @@
+---
+sidebar: sidebar 
+permalink: openshift/os-adv-mgmt-governance-risk.html 
+keywords: OpenShift, OCP, Trident, NetApp ONTAP, ONTAP, Trident, Red Hat OpenShift, Advanced Cluster Management, Advanced Cluster Management for Kubernetes 
+summary: Gerenciamento avançado de cluster para Kubernetes no Red Hat OpenShift com NetApp 
+---
+= Governança e risco
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+Esse recurso permite que você defina as políticas de conformidade para diferentes clusters e garanta que os clusters as cumpram.  Você pode configurar as políticas para informar ou remediar quaisquer desvios ou violações das regras.
+
+. Navegue até Governança e Risco na barra lateral.
+. Para criar políticas de conformidade, clique em Criar política, insira os detalhes dos padrões da política e selecione os clusters que devem aderir a essa política.  Se você quiser corrigir automaticamente as violações desta política, marque a caixa de seleção Aplicar se suportado e clique em Criar.
++
+image:redhat-openshift-080.png["Criar política de conformidade"]
+
+. Depois que todas as políticas necessárias forem configuradas, qualquer violação de política ou cluster poderá ser monitorada e corrigida pelo Advanced Cluster Management.
++
+image:redhat-openshift-081.png["Monitoramento de políticas"]
+
+

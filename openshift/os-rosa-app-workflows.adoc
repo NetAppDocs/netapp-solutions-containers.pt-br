@@ -1,0 +1,129 @@
+---
+sidebar: sidebar 
+permalink: openshift/os-rosa-app-workflows.html 
+keywords: OpenShift, OCP, Trident, NetApp ONTAP, Red Hat OpenShift Service on AWS, 
+summary: Serviço Red Hat OpenShift na AWS com NetApp ONTAP 
+---
+= Serviço Red Hat OpenShift na AWS com NetApp ONTAP
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+Este documento descreverá como usar o NetApp ONTAP com o Red Hat OpenShift Service na AWS (ROSA).
+
+
+
+== Criar instantâneo de volume
+
+**1.  Criar um instantâneo do volume do aplicativo** Nesta seção, mostraremos como criar um instantâneo do Trident do volume associado ao aplicativo. Esta será uma cópia de um momento específico dos dados do aplicativo.  Se os dados do aplicativo forem perdidos, podemos recuperar os dados desta cópia de momento.  OBSERVAÇÃO: este instantâneo é armazenado no mesmo agregado que o volume original no ONTAP(no local ou na nuvem).  Portanto, se o agregado de armazenamento ONTAP for perdido, não poderemos recuperar os dados do aplicativo a partir do seu snapshot.
+
+**um.  Crie uma VolumeSnapshotClass Salve o seguinte manifesto em um arquivo chamado volume-snapshot-class.yaml
+
+[source]
+----
+apiVersion: snapshot.storage.k8s.io/v1
+kind: VolumeSnapshotClass
+metadata:
+ name: fsx-snapclass
+driver: csi.trident.netapp.io
+deletionPolicy: Delete
+----
+Crie um snapshot usando o manifesto acima.
+
+image:redhat-openshift-container-rosa-020.png["classe de instantâneo"]
+
+**b.  Em seguida, crie um snapshot** Crie um snapshot do PVC existente criando o VolumeSnapshot para fazer uma cópia de um momento específico dos seus dados do Postgresql.  Isso cria um instantâneo do FSx que ocupa quase nenhum espaço no backend do sistema de arquivos.  Salve o seguinte manifesto em um arquivo chamado volume-snapshot.yaml:
+
+[source]
+----
+apiVersion: snapshot.storage.k8s.io/v1
+kind: VolumeSnapshot
+metadata:
+ name: postgresql-volume-snap-01
+spec:
+ volumeSnapshotClassName: fsx-snapclass
+ source:
+   persistentVolumeClaimName: data-postgresql-0
+----
+**c.  Crie o instantâneo do volume e confirme que ele foi criado**
+
+Exclua o banco de dados para simular a perda de dados (a perda de dados pode ocorrer por vários motivos, aqui estamos apenas simulando isso excluindo o banco de dados)
+
+image:redhat-openshift-container-rosa-021.png["instantâneo de volume"]
+
+**d.  Exclua o banco de dados para simular a perda de dados (a perda de dados pode ocorrer por vários motivos, aqui estamos apenas simulando isso excluindo o banco de dados)**
+
+image:redhat-openshift-container-rosa-022.png["conexão de banco de dados"]
+
+image:redhat-openshift-container-rosa-023.png["descartar banco de dados"]
+
+
+
+== Restaurar a partir do instantâneo de volume
+
+**1.  Restaurar do Snapshot** Nesta seção, mostraremos como restaurar um aplicativo a partir do snapshot do Trident do volume do aplicativo.
+
+**um.  Crie um clone de volume a partir do snapshot**
+
+Para restaurar o volume ao seu estado anterior, você deve criar um novo PVC com base nos dados do instantâneo que você tirou.  Para fazer isso, salve o seguinte manifesto em um arquivo chamado pvc-clone.yaml
+
+[source]
+----
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+ name: postgresql-volume-clone
+spec:
+ accessModes:
+   - ReadWriteOnce
+ storageClassName: trident-csi
+ resources:
+   requests:
+     storage: 8Gi
+ dataSource:
+   name: postgresql-volume-snap-01
+   kind: VolumeSnapshot
+   apiGroup: snapshot.storage.k8s.io
+----
+Crie um clone do volume criando um PVC usando o snapshot como fonte usando o manifesto acima.  Aplique o manifesto e certifique-se de que o clone foi criado.
+
+image:redhat-openshift-container-rosa-024.png["clone postgresql a partir de snapshot"]
+
+**b.  Excluir a instalação original do postgresql**
+
+image:redhat-openshift-container-rosa-025.png["excluir aplicativo postgresql"]
+
+**c.  Crie um novo aplicativo postgresql usando o novo clone PVC**
+
+[source]
+----
+$ helm install postgresql bitnami/postgresql --set primary.persistence.enabled=true --set primary.persistence.existingClaim=postgresql-volume-clone -n postgresql
+----
+image:redhat-openshift-container-rosa-026.png["nova instalação do postgresql"]
+
+**d.  Verifique se o pod do aplicativo está em execução**
+
+image:redhat-openshift-container-rosa-027.png["nova instalação do postgresql"]
+
+**e.  Verifique se o pod usa o clone como seu PVC**
+
+image:redhat-openshift-container-rosa-028.png["descrição da nova instalação do postgresql"]
+
+image:redhat-openshift-container-rosa-029.png["o novo pvc é o clone"]
+
+f) Para validar se o banco de dados foi restaurado conforme o esperado, volte ao console do contêiner e mostre os bancos de dados existentes
+
+image:redhat-openshift-container-rosa-030.png["banco de dados restaurado"]
+
+
+
+== Vídeo de demonstração
+
+.Amazon FSx for NetApp ONTAP com Red Hat OpenShift Service na AWS usando o Hosted Control Plane
+video::213061d2-53e6-4762-a68f-b21401519023[panopto,width=360]
+Mais vídeos sobre o Red Hat OpenShift e as soluções OpenShift podem ser encontradoslink:../videos/openshift-videos.html["aqui"] .

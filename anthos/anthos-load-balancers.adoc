@@ -1,0 +1,24 @@
+---
+sidebar: sidebar 
+permalink: anthos/anthos-load-balancers.html 
+keywords: Advanced Configuration, Load Balancers, F5, BigIP, SeeSaw 
+summary: Esta seção é dedicada à exploração de opções de balanceador de carga para usuários que desejam personalizar sua implantação do Anthos com NetApp . 
+---
+= Explorando opções de balanceador de carga
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+Um aplicativo implantado no Anthos é exposto ao mundo por um serviço entregue por um balanceador de carga implantado no ambiente local do Anthos.
+
+As páginas a seguir contêm informações adicionais sobre as opções do balanceador de carga validadas na solução Anthos com NetApp :
+
+* link:anthos-f5bigip-lb.html["Instalando balanceadores de carga F5 BIG-IP"]
+* link:anthos-metallb.html["Instalando balanceadores de carga MetalLB"]
+* link:anthos-seesaw-lb.html["Instalando balanceadores de carga SeeSaw"]
+

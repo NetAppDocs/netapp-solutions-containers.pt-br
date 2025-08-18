@@ -1,0 +1,30 @@
+---
+sidebar: sidebar 
+permalink: videos/anthos-videos.html 
+keywords: video, demonstration, deployment 
+summary: Demonstra alguns dos recursos documentados neste documento. 
+---
+= Assista a vídeos sobre o Anthos com a NetApp
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+Explore os principais recursos e cenários de implantação do NetApp com o Google Anthos por meio de uma seleção selecionada de vídeos e demonstrações.  Esses recursos apresentam práticas recomendadas, etapas de integração e casos de uso do mundo real.
+
+
+
+== Implantação e configuração do Anthos em bare metal
+
+.Implantar o Anthos em bare metal - Anthos com NetApp
+video::a9e5fd88-6bdc-4d23-a4b5-b01200effc06[panopto,width=360]
+
+
+== Implantação e configuração do Trident no Anthos
+
+.Implantar o Trident no cluster do Anthos 1.14
+video::8ea4c03a-85e9-4d90-bf3c-afb6011b051c[panopto,width=360]

@@ -1,0 +1,34 @@
+---
+sidebar: sidebar 
+permalink: openshift/os-adv-mgmt-observability.html 
+keywords: OpenShift, OCP, Trident, NetApp ONTAP, ONTAP, Trident, Red Hat OpenShift, Advanced Cluster Management, Advanced Cluster Management for Kubernetes 
+summary: Gerenciamento avançado de cluster para Kubernetes no Red Hat OpenShift com NetApp 
+---
+= Observabilidade
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+O Advanced Cluster Management for Kubernetes fornece uma maneira de monitorar nós, pods, aplicativos e cargas de trabalho em todos os clusters.
+
+. Navegue até Observar ambientes > Visão geral.
++
+image:redhat-openshift-082.png["Página inicial de observabilidade"]
+
+. Todos os pods e cargas de trabalho em todos os clusters são monitorados e classificados com base em uma variedade de filtros.  Clique em Pods para visualizar os dados correspondentes.
++
+image:redhat-openshift-083.png["Observar Pods"]
+
+. Todos os nós nos clusters são monitorados e analisados com base em uma variedade de pontos de dados.  Clique em Nós para obter mais informações sobre os detalhes correspondentes.
++
+image:redhat-openshift-084.png["Observar nós"]
+
+. Todos os clusters são monitorados e organizados com base em diferentes recursos e parâmetros de cluster.  Clique em Clusters para visualizar detalhes do cluster.
++
+image:redhat-openshift-085.png["Observar aglomerados"]
+
+

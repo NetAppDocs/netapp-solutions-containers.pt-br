@@ -1,0 +1,142 @@
+---
+sidebar: sidebar 
+permalink: anthos/anthos-deploy-app-cloud-console.html 
+keywords: Anthos, Trident, NetApp ONTAP, ONTAP, Trident 
+summary: Como implantar um aplicativo no seu cluster do Anthos GKE no local usando o Google Cloud Console. 
+---
+= Implantar um aplicativo do Google Cloud Console Marketplace
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+Esta seção detalha como implantar um aplicativo no seu cluster do Anthos GKE no local, usando o Google Cloud Console.
+
+
+
+== Pré-requisitos
+
+* Um cluster do Anthos implantado no local e registrado no Google Cloud Console
+* Um balanceador de carga MetalLB configurado no seu cluster Anthos
+* Uma conta com permissões para implantar aplicativos no cluster
+* Uma conta de cobrança com o Google Cloud se você escolher um aplicativo com custos associados (opcional)
+
+
+
+
+== Implantando um aplicativo
+
+Para este caso de uso, implantamos um aplicativo WordPress simples em um de nossos clusters Anthos usando o Google Cloud Console.  A implantação usa armazenamento persistente fornecido pelo NetApp ONTAP em uma classe de armazenamento predefinida.  Em seguida, demonstramos dois métodos diferentes para modificar o serviço padrão dos aplicativos para que o balanceador de carga MetalLB forneça a ele um endereço IP e o exponha ao mundo.
+
+Para implantar um aplicativo dessa maneira, conclua as seguintes etapas:
+
+. Verifique se o cluster no qual você deseja implantar está acessível no Google Cloud Console.
++
+image:a-w-n-use-case-deploy-app-010.png["Clusters Registrados"]
+
+. Selecione Aplicativos no menu do lado esquerdo, selecione o menu de opções de três pontos na parte superior e selecione Implantar do Marketplace, que abre uma nova janela na qual você pode selecionar um aplicativo do Google Cloud Marketplace.
++
+image:a-w-n-use-case-deploy-app-009.png["Mercado de aplicativos"]
+
+. Procure o aplicativo que você deseja instalar, neste caso o WordPress.
++
+image:a-w-n-use-case-deploy-app-008.png["Pesquisar por WordPress"]
+
+. Depois de selecionar o aplicativo WordPress, uma tela de visão geral é exibida.  Clique no botão Configurar.
++
+image:a-w-n-use-case-deploy-app-007.png["Tela de Visão Geral do WordPress"]
+
+. Na próxima página, você deve selecionar o cluster a ser implantado, no nosso caso, o Demo-Cluster.  Selecione ou crie um novo namespace e nome de instância de aplicativo e selecione quais classes de armazenamento e tamanhos de volume persistentes você precisa para o aplicativo WordPress e seu banco de dados MariaDB de suporte.  Em ambos os casos, escolhemos a classe de armazenamento ONTAP-NAS-CSI.
++
+image:a-w-n-use-case-deploy-app-006.png["Configuração do WordPress"]
+
++
+
+NOTE: Não selecione Habilitar acesso IP público.  Isso cria um serviço do tipo NodePort que não pode ser acessado de uma implantação local do Anthos.
+
+. Após clicar no botão Implantar, você verá uma página fornecendo detalhes do aplicativo.  Você pode atualizar esta página ou efetuar login no seu cluster usando a CLI para verificar o status da implantação.
++
+image:a-w-n-use-case-deploy-app-005.png["Detalhes da aplicação"]
+
+. A CLI pode ser usada para verificar o status do aplicativo enquanto ele está sendo implantado, executando o comando para buscar informações do pod no namespace do aplicativo: `kubectl get pods -n anthos-wp` .
++
+image:a-w-n-use-case-deploy-app-004.png["Kubectl obtém pods"]
+
++
+
+NOTE: Observe nesta captura de tela que há um pod do implantador em estado de erro.  Isso é normal.  Este pod é um pod auxiliar usado pelo Google Cloud Console para implantar o aplicativo que se encerra automaticamente depois que os outros pods iniciam o processo de inicialização.
+
+. Após alguns instantes, verifique se seu aplicativo está em execução.
++
+image:a-w-n-use-case-deploy-app-003.png["Aplicação em execução"]
+
+
+
+
+
+== Expondo o aplicativo
+
+Após a implantação do aplicativo, você tem dois métodos para atribuir a ele um IP acessível mundialmente.
+
+
+
+=== Usando o Google Cloud Console
+
+Você pode expor o aplicativo usando o Google Cloud Console e editando a saída YAML dos serviços em um navegador para definir um IP acessível publicamente.  Para fazer isso, execute os seguintes passos:
+
+. No Google Cloud Console, clique em Serviços e Entrada no menu do lado esquerdo.
++
+image:a-w-n-use-case-deploy-app-011.png["Serviços e Ingresso"]
+
+. Clique no `wordpress-wordpress-svc` serviço.  Isso abre a tela Detalhes do serviço.  Clique no botão Editar na parte superior.
++
+image:a-w-n-use-case-deploy-app-012.png["Editar detalhes do serviço"]
+
+. A página Detalhes do serviço de edição é aberta contendo as informações YAML do serviço.  Role para baixo até ver o `spec:` seção e a `type:` valor, que é definido como `ClusterIP` .  Altere este valor para `LoadBalancer` e clique no botão Salvar.
++
+image:a-w-n-use-case-deploy-app-013.png["Digite ClusterIP Valor"]
+
++
+image:a-w-n-use-case-deploy-app-014.png["Tipo LoadBalancer Valor"]
+
+. Ao retornar à página Detalhes do serviço, o `Type:` agora lista `LoadBalancer` e o `External endpoints:` O campo lista um endereço IP atribuído do pool MetalLB e a porta pela qual o aplicativo pode ser acessado.
++
+image:a-w-n-use-case-deploy-app-015.png["Detalhes do serviço final"]
+
+
+
+
+
+=== Corrigindo o serviço com Kubectl
+
+Você pode expor o aplicativo usando o CLI e o `kubectl patch` comando para modificar sua implantação e definir um IP acessível publicamente. Para fazer isso, siga os seguintes passos:
+
+. Liste os serviços associados aos pods em seu namespace com o `kubectl get services -n anthos-wp` comando.
++
+image:a-w-n-use-case-deploy-app-002.png["Lista de serviços"]
+
+. Modifique o tipo de serviço de `ClusterIP` digitar `Loadbalancer` usando o seguinte comando:
++
+[listing]
+----
+kubectl patch svc wordpress-wordpress-svc -p '{"spec": {"type": "LoadBalancer"}}' -n anthos-wp'.
+----
++
+Este novo tipo de serviço recebe automaticamente um endereço IP disponível do pool MetalLB.
+
++
+image:a-w-n-use-case-deploy-app-001.png["Serviço de patch para o tipo LoadBalancer"]
+
+
+
+
+
+== Visite o aplicativo no IP externo exposto
+
+Agora que você tem o aplicativo exposto com um endereço IP acessível publicamente, você pode visitar sua instância do WordPress usando um navegador.
+
+image:a-w-n-use-case-deploy-app-016.png["WordPress no navegador"]
