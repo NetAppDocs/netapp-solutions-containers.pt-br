@@ -154,9 +154,9 @@ A distribuição de nós do cluster do Anthos em vários nós do hipervisor pode
 
 Afinidade ou antiafinidade é uma maneira de definir regras para um conjunto de VMs e/ou hosts que determinam se as VMs serão executadas juntas no mesmo host ou hosts do grupo ou em hosts diferentes.  Ele é aplicado a VMs criando grupos de afinidade que consistem em VMs e/ou hosts com um conjunto de parâmetros e condições idênticos.  Dependendo se as VMs em um grupo de afinidade são executadas no mesmo host ou hosts no grupo ou separadamente em hosts diferentes, os parâmetros do grupo de afinidade podem definir afinidade positiva ou negativa.
 
-Para configurar grupos de afinidade, consulte o link apropriado abaixo para sua versão do VMWare vSphere.
+Para configurar grupos de afinidade, consulte o link apropriado abaixo para a sua versão do VMware vSphere.
 
-https://docs.vmware.com/en/VMware-vSphere/6.7/com.vmware.vsphere.resmgmt.doc/GUID-FF28F29C-8B67-4EFF-A2EF-63B3537E6934.html["Documentação do vSphere 6.7: Usando regras de afinidade DRS"^] . https://docs.vmware.com/en/VMware-vSphere/7.0/com.vmware.vsphere.resmgmt.doc/GUID-FF28F29C-8B67-4EFF-A2EF-63B3537E6934.html["Documentação do vSphere 7.0: Usando regras de afinidade DRS"^] .
+https://techdocs.broadcom.com/us/en/vmware-cis/vsphere/vsphere/9-0/vsphere-resource-management/using-drs-clusters-to-manage-resources/using-vm-host-affinity-rules.html["Documentação do vSphere 9.0: Usando regras de afinidade DRS"^]. hhttps://techdocs.broadcom.com/us/en/vmware-cis/vsphere/vsphere/7-0/vsphere-resource-management/using-drs-clusters-to-manage-resources/using-vm-host-affinity-rules.html[Documentação do vSphere 7.0: Usando regras de afinidade DRS^].
 
 
 NOTE: O Anthos tem uma opção de configuração em cada indivíduo `cluster.yaml` arquivo para criar automaticamente regras de afinidade de nós que podem ser ativadas ou desativadas com base no número de hosts ESXi em seu ambiente.
