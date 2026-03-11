@@ -22,7 +22,7 @@ Explore a integração do Red Hat OpenShift com o NetApp por meio de uma série 
 
 .Recuperação de desastres para uma VM usando Trident Protect
 video::ae4bdcf7-b344-4f19-89ed-b2d500f94efd[panopto,width=360]
-.Protegendo uma VM usando o Trident Protect
+.Protegendo uma VM usando Trident Protect
 video::4670e188-3d67-4207-84c5-b2d500f934a0[panopto,width=360]
 .Failover/failback de VMs OpenShift usando recursos avançados de gerenciamento de dados do Trident (somente programa de acesso antecipado disponível)
 video::f2a8fa24-2971-4cdc-9bbb-b1f1007032ea[panopto,width=360]
