@@ -20,6 +20,7 @@ O Seesaw é o balanceador de carga de rede gerenciado padrão instalado em um am
 
 
 
+[[installing-the-seesaw-load-balancer]]
 == Instalando o balanceador de carga SeeSaw
 
 O balanceador de carga SeeSaw é totalmente integrado ao Anthos Clusters no VMware e tem implantação automatizada realizada como parte das configurações de cluster de administrador e usuário.  Existem blocos de texto no `cluster.yaml` arquivos de configuração que devem ser modificados para fornecer informações do balanceador de carga e, em seguida, há uma etapa adicional antes da implantação do cluster para implantar o balanceador de carga usando o integrado `gkectl` ferramenta.
@@ -29,6 +30,7 @@ NOTE: Os balanceadores de carga SeeSaw podem ser implantados no modo HA ou não 
 
 
 
+[[integration-with-anthos]]
 == Integração com o Anthos
 
 Há uma seção em cada arquivo de configuração, respectivamente para o cluster de administrador e em cada cluster de usuário que você escolher implantar para configurar o balanceador de carga para que ele seja gerenciado pelo Anthos On-Prem.

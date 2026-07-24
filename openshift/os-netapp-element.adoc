@@ -22,6 +22,7 @@ Para obter mais informações sobre os sistemas de armazenamento NetApp Element 
 
 
 
+[[iscsi-login-redirection-and-self-healing-capabilities]]
 == Redirecionamento de login iSCSI e recursos de autocorreção
 
 O software NetApp Element utiliza o protocolo de armazenamento iSCSI, uma maneira padrão de encapsular comandos SCSI em uma rede TCP/IP tradicional.  Quando os padrões SCSI mudam ou quando o desempenho das redes Ethernet melhora, o protocolo de armazenamento iSCSI é beneficiado sem a necessidade de nenhuma alteração.
@@ -34,6 +35,7 @@ Dessa forma, se uma falha de nó for seguida por redistribuição de volume, nã
 
 
 
+[[netapp-element-software-cluster-qos]]
 == QoS do cluster de software NetApp Element
 
 Um cluster de software NetApp Element permite que o QoS seja configurado dinamicamente por volume.  Você pode usar configurações de QoS por volume para controlar o desempenho do armazenamento com base nos SLAs que você definir.  Os três parâmetros configuráveis a seguir definem o QoS:
@@ -45,6 +47,7 @@ Um cluster de software NetApp Element permite que o QoS seja configurado dinamic
 
 
 
+[[multitenancy]]
 == Multilocação
 
 A multilocação segura é alcançada com os seguintes recursos:
@@ -62,6 +65,7 @@ A multilocação segura é alcançada com os seguintes recursos:
 
 
 
+[[enterprise-storage-efficiencies]]
 == Eficiências de armazenamento empresarial
 
 O cluster de software NetApp Element aumenta a eficiência e o desempenho geral do armazenamento.  Os seguintes recursos são executados em linha, estão sempre ativos e não exigem configuração manual pelo usuário:

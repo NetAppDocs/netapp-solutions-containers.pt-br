@@ -18,6 +18,7 @@ Os recursos independentes de hardware do Anthos em bare metal permitem que você
 
 
 
+[[benefits]]
 == Benefícios
 
 Os recursos independentes de hardware do Anthos em bare metal permitem que você selecione uma plataforma de computação otimizada para seu caso de uso personalizado e também oferecem muitos benefícios adicionais.
@@ -32,10 +33,12 @@ Exemplos incluem o seguinte:
 
 
 
+[[hardware-requirements]]
 == Requisitos de hardware
 
 
 
+[[compute]]
 === Calcular
 
 O Google Cloud solicita periodicamente a validação atualizada das plataformas de servidores parceiros com novas versões do Anthos por meio do programa de parceiros da plataforma Anthos Ready.  Uma lista de plataformas de servidores atualmente validadas e as versões do Anthos suportadas podem ser encontradas https://cloud.google.com/anthos/docs/resources/partner-platforms["aqui"^] .
@@ -55,6 +58,7 @@ A tabela a seguir contém plataformas de servidor que foram testadas pela NetApp
 |===
 
 
+[[operating-system]]
 === Sistema operacional
 
 Os nós do Anthos em bare metal podem ser configurados com diversas distribuições Linux diferentes, conforme escolhido pelo cliente para ajudar a corresponder à infraestrutura atual do seu datacenter.
@@ -78,6 +82,7 @@ A tabela a seguir contém uma lista de sistemas operacionais Linux que foram usa
 |===
 
 
+[[additional-hardware]]
 === Hardware adicional
 
 Para concluir a implantação do Anthos em bare metal como uma solução totalmente validada, componentes adicionais do data center para rede e armazenamento foram testados pela NetApp e nossos engenheiros parceiros.
@@ -95,6 +100,7 @@ A tabela a seguir inclui informações sobre esses componentes de infraestrutura
 |===
 
 
+[[additional-software]]
 === Software adicional
 
 A tabela a seguir inclui uma lista de versões adicionais de software implantadas no ambiente de validação.
@@ -122,6 +128,7 @@ NOTE: Este ambiente multi-SO mostra interoperabilidade com versões de SO suport
 
 
 
+[[infrastructure-support-resources]]
 === Recursos de suporte de infraestrutura
 
 A seguinte infraestrutura deve estar em vigor antes da implantação do Anthos no bare metal:

@@ -18,6 +18,7 @@ Esta seção detalha como implantar um aplicativo no seu cluster do Anthos GKE n
 
 
 
+[[prerequisites]]
 == Pré-requisitos
 
 * Um cluster do Anthos implantado no local e registrado no Google Cloud Console
@@ -28,6 +29,7 @@ Esta seção detalha como implantar um aplicativo no seu cluster do Anthos GKE n
 
 
 
+[[deploying-an-application]]
 == Implantando um aplicativo
 
 Para este caso de uso, implantamos um aplicativo WordPress simples em um de nossos clusters Anthos usando o Google Cloud Console.  A implantação usa armazenamento persistente fornecido pelo NetApp ONTAP em uma classe de armazenamento predefinida.  Em seguida, demonstramos dois métodos diferentes para modificar o serviço padrão dos aplicativos para que o balanceador de carga MetalLB forneça a ele um endereço IP e o exponha ao mundo.
@@ -78,12 +80,14 @@ image:a-w-n-use-case-deploy-app-003.png["Aplicação em execução"]
 
 
 
+[[exposing-the-application]]
 == Expondo o aplicativo
 
 Após a implantação do aplicativo, você tem dois métodos para atribuir a ele um IP acessível mundialmente.
 
 
 
+[[using-the-google-cloud-console]]
 === Usando o Google Cloud Console
 
 Você pode expor o aplicativo usando o Google Cloud Console e editando a saída YAML dos serviços em um navegador para definir um IP acessível publicamente.  Para fazer isso, execute os seguintes passos:
@@ -111,6 +115,7 @@ image:a-w-n-use-case-deploy-app-015.png["Detalhes do serviço final"]
 
 
 
+[[patching-the-service-with-kubectl]]
 === Corrigindo o serviço com Kubectl
 
 Você pode expor o aplicativo usando o CLI e o `kubectl patch` comando para modificar sua implantação e definir um IP acessível publicamente. Para fazer isso, siga os seguintes passos:
@@ -135,6 +140,7 @@ image:a-w-n-use-case-deploy-app-001.png["Serviço de patch para o tipo LoadBalan
 
 
 
+[[visit-the-application-at-the-exposed-external-ip]]
 == Visite o aplicativo no IP externo exposto
 
 Agora que você tem o aplicativo exposto com um endereço IP acessível publicamente, você pode visitar sua instância do WordPress usando um navegador.

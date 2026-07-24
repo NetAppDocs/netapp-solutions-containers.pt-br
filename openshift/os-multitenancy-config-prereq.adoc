@@ -18,6 +18,7 @@ A seguir estão os pré-requisitos para configurar a multilocação no Red Hat O
 
 
 
+[[prerequisites]]
 == Pré-requisitos
 
 * Cluster NetApp ONTAP

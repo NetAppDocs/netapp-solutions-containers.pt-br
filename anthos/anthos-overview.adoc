@@ -18,6 +18,7 @@ O Anthos com NetApp é uma arquitetura de nuvem híbrida verificada e de prátic
 
 
 
+[[anthos]]
 == Anthos
 
 O Anthos é uma solução de data center Kubernetes de nuvem híbrida que permite que organizações construam e gerenciem infraestruturas modernas de nuvem híbrida, adotando fluxos de trabalho ágeis focados no desenvolvimento de aplicativos.  O Anthos on VMware, uma solução criada com base em tecnologias de código aberto, é executado localmente em uma infraestrutura baseada no VMware vSphere, que pode se conectar e interoperar com o Anthos GKE no Google Cloud.  A adoção de contêineres, malha de serviços e outras tecnologias transformacionais permite que as organizações experimentem ciclos consistentes de desenvolvimento de aplicativos e cargas de trabalho prontas para produção em ambientes locais e baseados em nuvem.  A figura a seguir descreve a solução Anthos e como uma implantação em um data center local se interconecta com a infraestrutura na nuvem.
@@ -37,10 +38,12 @@ image:a-w-n-anthos-architecture.png["Figura mostrando diálogo de entrada/saída
 
 
 
+[[deployment-methods-for-anthos]]
 == Métodos de implantação para Anthos
 
 
 
+[[anthos-clusters-on-vmware]]
 === Clusters do Anthos no VMware
 
 Os clusters do Anthos implantados em ambientes VMware vSphere são fáceis de implantar, manter e dimensionar rapidamente para a maioria das cargas de trabalho do Kubernetes do usuário final.
@@ -49,6 +52,7 @@ Para obter mais informações sobre os clusters do Anthos no VMware, implantados
 
 
 
+[[anthos-on-bare-metal]]
 === Anthos em metal puro
 
 Os clusters do Anthos implantados em servidores bare metal são independentes de hardware e permitem que você selecione uma plataforma de computação otimizada para seu caso de uso personalizado.

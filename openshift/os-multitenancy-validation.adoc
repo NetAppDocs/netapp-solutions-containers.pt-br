@@ -18,6 +18,7 @@ Para validar a arquitetura multilocatário configurada nas etapas anteriores, co
 
 
 
+[[validate-access-to-create-pvcs-or-pods-in-assigned-project]]
 == Validar acesso para criar PVCs ou pods no projeto atribuído
 
 . Efetue login como ocp-project-1-user, desenvolvedor no projeto-1.
@@ -96,6 +97,7 @@ oc describe pods test-pvc-pod -n project-1
 
 
 
+[[validate-access-to-create-pvcs-or-pods-in-another-project-or-use-resources-dedicated-to-another-project]]
 == Validar acesso para criar PVCs ou pods em outro projeto ou usar recursos dedicados a outro projeto
 
 . Efetue login como ocp-project-1-user, desenvolvedor no projeto-1.
@@ -171,6 +173,7 @@ EOF
 
 
 
+[[validate-access-to-view-and-edit-projects-resourcequotas-and-storageclasses]]
 == Validar acesso para visualizar e editar Projetos, ResourceQuotas e StorageClasses
 
 . Efetue login como ocp-project-1-user, desenvolvedor no projeto-1.

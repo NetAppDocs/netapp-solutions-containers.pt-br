@@ -82,10 +82,12 @@ image:redhat-openshift-035.png["Figura mostrando diálogo de entrada/saída ou r
 
 
 
+[[netapp-platforms]]
 == Plataformas NetApp
 
 
 
+[[netapp-afffas]]
 === NetApp AFF/ FAS
 
 A NetApp fornece plataformas de armazenamento robustas all-flash (AFF) e híbridas escaláveis (FAS), feitas sob medida com desempenho de baixa latência, proteção de dados integrada e suporte a vários protocolos.
@@ -96,6 +98,7 @@ Para mais informações sobre as plataformas NETAPP AFF/ FAS , clique https://do
 
 
 
+[[ontap-select]]
 === ONTAP Select
 
 O ONTAP Select é uma implantação definida por software do NetApp ONTAP que pode ser implantada em um hipervisor no seu ambiente.  Ele pode ser instalado no VMware vSphere ou no KVM e fornece toda a funcionalidade e experiência de um sistema ONTAP baseado em hardware.
@@ -104,6 +107,7 @@ Para mais informações sobre o ONTAP Select, clique em https://docs.netapp.com/
 
 
 
+[[cloud-volumes-ontap]]
 === Cloud Volumes ONTAP
 
 O NetApp Cloud Volumes ONTAP é uma versão implantada na nuvem do NetApp ONTAP que pode ser implantada em diversas nuvens públicas, incluindo Amazon AWS, Microsoft Azure e Google Cloud.

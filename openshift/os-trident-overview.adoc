@@ -28,6 +28,7 @@ Por favor, consulte olink:https://docs.netapp.com/us-en/trident/index.html["Docu
 
 
 
+[[download-trident]]
 == Baixar Trident
 
 Para instalar o Trident no cluster de usuários implantado e provisionar um volume persistente, conclua as seguintes etapas:
@@ -45,6 +46,7 @@ Para instalar o Trident no cluster de usuários implantado e provisionar um volu
 
 
 
+[[install-the-trident-operator-with-helm]]
 == Instalar o Trident Operator com Helm
 
 . Primeiro defina a localização do cluster do usuário `kubeconfig` arquivo como uma variável de ambiente para que você não precise referenciá-lo, porque o Trident não tem opção para passar esse arquivo.
@@ -106,6 +108,7 @@ NOTE: Em alguns casos, os ambientes do cliente podem exigir a personalização d
 
 
 
+[[manually-install-the-trident-operator]]
 == Instalar manualmente o Operador Trident
 
 . Primeiro, defina a localização do cluster do usuário `kubeconfig` arquivo como uma variável de ambiente para que você não precise referenciá-lo, porque o Trident não tem opção para passar esse arquivo.
@@ -260,10 +263,12 @@ trident-operator-66f48895cc-lzczk   1/1     Running   0          2m39s
 
 
 
+[[prepare-worker-nodes-for-storage]]
 == Preparar nós de trabalho para armazenamento
 
 
 
+[[nfs]]
 === NFS
 
 A maioria das distribuições do Kubernetes vem com os pacotes e utilitários para montar backends NFS instalados por padrão, incluindo o Red Hat OpenShift.
@@ -309,6 +314,7 @@ worker   rendered-worker-de321b36eeba62df41feb7bc   True      False      False
 
 
 
+[[iscsi]]
 === iSCSI
 
 Para preparar nós de trabalho para permitir o mapeamento de volumes de armazenamento em bloco por meio do protocolo iSCSI, você deve instalar os pacotes necessários para dar suporte a essa funcionalidade.
@@ -418,6 +424,7 @@ NOTE: Também é possível confirmar se o MachineConfig foi aplicado com sucesso
 
 
 
+[[create-storage-system-backends]]
 == Criar backends de sistema de armazenamento
 
 Após concluir a instalação do Trident Operator, você deve configurar o backend para a plataforma de armazenamento NetApp específica que está usando.  Siga os links abaixo para continuar a instalação e configuração do Trident.

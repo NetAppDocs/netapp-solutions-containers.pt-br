@@ -18,6 +18,7 @@ Esta seção fornece as etapas para implantar um pipeline de integração contí
 
 
 
+[[create-the-resources-required-for-jenkins-deployment]]
 == Crie os recursos necessários para a implantação do Jenkins
 
 Para criar os recursos necessários para implantar o aplicativo Jenkins, conclua as seguintes etapas:
@@ -33,6 +34,7 @@ image:redhat-openshift-016.png["Figura mostrando diálogo de entrada/saída ou r
 
 
 
+[[deploy-jenkins-with-persistent-storage]]
 == Implantar Jenkins com armazenamento persistente
 
 Para implantar o Jenkins com armazenamento persistente, conclua as seguintes etapas:

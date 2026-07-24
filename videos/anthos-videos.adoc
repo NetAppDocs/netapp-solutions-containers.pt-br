@@ -18,12 +18,14 @@ Explore os principais recursos e cenários de implantação do NetApp com o Goog
 
 
 
+[[anthos-deployment-and-setup-on-bare-metal]]
 == Implantação e configuração do Anthos em bare metal
 
 .Implantar o Anthos em bare metal - Anthos com NetApp
 video::a9e5fd88-6bdc-4d23-a4b5-b01200effc06[panopto,width=360]
 
 
+[[trident-deployment-and-setup-on-anthos]]
 == Implantação e configuração do Trident no Anthos
 
 .Implantar o Trident no cluster do Anthos 1.14

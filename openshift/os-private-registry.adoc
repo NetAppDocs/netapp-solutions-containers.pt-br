@@ -23,6 +23,7 @@ NOTE: O Trident Protect requer um registro para hospedar as imagens exigidas pel
 
 
 
+[[creating-a-private-image-registry]]
 == Criando um registro de imagem privado
 
 . Remova a anotação padrão da classe de armazenamento padrão atual e anote a classe de armazenamento apoiada pelo Trident como padrão para o cluster OpenShift.

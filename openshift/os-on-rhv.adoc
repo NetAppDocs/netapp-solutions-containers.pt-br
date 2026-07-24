@@ -31,12 +31,14 @@ image:redhat-openshift-003.png["Figura mostrando diálogo de entrada/saída ou r
 
 
 
+[[network-design]]
 == Projeto de rede
 
 A solução Red Hat OpenShift on NetApp usa dois switches de dados para fornecer conectividade de dados primária a 25 Gbps.  Ele também usa dois switches de gerenciamento adicionais que fornecem conectividade a 1 Gbps para gerenciamento em banda dos nós de armazenamento e gerenciamento fora de banda para funcionalidade IPMI.  O OCP usa a rede lógica da máquina virtual no RHV para gerenciamento de cluster.  Esta seção descreve o arranjo e a finalidade de cada segmento de rede virtual usado na solução e descreve os pré-requisitos para implantar a solução.
 
 
 
+[[vlan-requirements]]
 === Requisitos do VLAN
 
 O Red Hat OpenShift no RHV foi projetado para separar logicamente o tráfego de rede para diferentes propósitos usando redes locais virtuais (VLANs).  Essa configuração pode ser dimensionada para atender às demandas dos clientes ou para fornecer maior isolamento para serviços de rede específicos.  A tabela a seguir lista as VLANs necessárias para implementar a solução durante a validação da solução na NetApp.
@@ -62,6 +64,7 @@ O Red Hat OpenShift no RHV foi projetado para separar logicamente o tráfego de 
 |===
 
 
+[[network-infrastructure-support-resources]]
 === Recursos de suporte de infraestrutura de rede
 
 A seguinte infraestrutura deve estar em vigor antes da implantação da OpenShift Container Platform:
@@ -73,12 +76,14 @@ A seguinte infraestrutura deve estar em vigor antes da implantação da OpenShif
 
 
 
+[[best-practices-for-production-deployments]]
 == Melhores práticas para implantações de produção
 
 Esta seção lista diversas práticas recomendadas que uma organização deve levar em consideração antes de implantar esta solução em produção.
 
 
 
+[[deploy-openshift-to-an-rhv-cluster-of-at-least-three-nodes]]
 === Implante o OpenShift em um cluster RHV de pelo menos três nós
 
 A arquitetura verificada descrita neste documento apresenta a implantação mínima de hardware adequada para operações de HA, implantando dois nós de hipervisor RHV-H e garantindo uma configuração tolerante a falhas em que ambos os hosts podem gerenciar o mecanismo hospedado e as VMs implantadas podem migrar entre os dois hipervisores.
@@ -87,6 +92,7 @@ Como o Red Hat OpenShift é implantado inicialmente com três nós mestres, é g
 
 
 
+[[configure-virtual-machinehost-affinity]]
 === Configurar afinidade de máquina virtual/host
 
 Você pode distribuir os mestres do OpenShift entre vários nós do hipervisor habilitando a afinidade VM/host.
@@ -99,6 +105,7 @@ Para configurar grupos de afinidade, consulte olink:https://access.redhat.com/do
 
 
 
+[[use-a-custom-install-file-for-openshift-deployment]]
 === Use um arquivo de instalação personalizado para implantação do OpenShift
 
 O IPI facilita a implantação de clusters OpenShift por meio do assistente interativo discutido anteriormente neste documento.  No entanto, é possível que haja alguns valores padrão que precisem ser alterados como parte da implantação do cluster.

@@ -15,12 +15,14 @@ summary: Serviço Red Hat OpenShift na AWS com NetApp ONTAP
 
 
 
+[[overview]]
 == Visão geral
 
 Nesta seção, mostraremos como utilizar o FSx para ONTAP como uma camada de armazenamento persistente para aplicativos em execução no ROSA.  Ele mostrará a instalação do driver NetApp Trident CSI em um cluster ROSA, o provisionamento de um FSx para o sistema de arquivos ONTAP e a implantação de um aplicativo com estado de exemplo.  Ele também mostrará estratégias para fazer backup e restaurar os dados do seu aplicativo.  Com esta solução integrada, você pode estabelecer uma estrutura de armazenamento compartilhado que pode ser facilmente dimensionada entre AZs, simplificando os processos de dimensionamento, proteção e restauração de seus dados usando o driver Trident CSI.
 
 
 
+[[prerequisites]]
 == Pré-requisitos
 
 * link:https://signin.aws.amazon.com/signin?redirect_uri=https://portal.aws.amazon.com/billing/signup/resume&client_id=signup["Conta AWS"]
@@ -40,6 +42,7 @@ image:redhat-openshift-container-rosa-001.png["Arquitetura Rosa"]
 
 
 
+[[initial-setup]]
 == Configuração inicial
 
 **1.  Provisão FSx para NetApp ONTAP**
