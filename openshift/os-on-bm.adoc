@@ -46,9 +46,9 @@ Para a configuração do nó do provisionador, o cliente cria interfaces de pont
 
 As imagens a seguir retratam o ambiente durante a implantação do IPI e após a conclusão da implantação.
 
-image:redhat-openshift-036.png["Figura mostrando diálogo de entrada/saída ou representando conteúdo escrito"]
+image::redhat-openshift-036.png[Figura mostrando diálogo de entrada/saída ou representando conteúdo escrito]
 
-image:redhat-openshift-037.png["Figura mostrando diálogo de entrada/saída ou representando conteúdo escrito"]
+image::redhat-openshift-037.png[Figura mostrando diálogo de entrada/saída ou representando conteúdo escrito]
 
 
 

@@ -26,7 +26,7 @@ O VMware vSphere oferece os seguintes recursos:
 * *Distributed Resource Scheduler (DRS)* Um cluster VMware vSphere pode ser configurado para balancear a carga das necessidades de recursos das VMs que ele está hospedando.  VMs com contenções de recursos podem ser migradas dinamicamente para outros nós no cluster para garantir que haja recursos suficientes disponíveis.
 
 
-image:redhat-openshift-033.png["Figura mostrando diálogo de entrada/saída ou representando conteúdo escrito"]
+image::redhat-openshift-033.png[Figura mostrando diálogo de entrada/saída ou representando conteúdo escrito]
 
 
 

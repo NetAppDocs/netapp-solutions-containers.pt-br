@@ -71,7 +71,7 @@ Para obter mais informações sobre o Anthos, consulte o site do Anthos localiza
 
 A NetApp tem vários sistemas de armazenamento perfeitos para data centers empresariais e implantações de nuvem híbrida.  O portfólio da NetApp inclui NetApp ONTAP, Cloud Volumes ONTAP, Google Cloud NetApp Volumes, Azure NetApp Files, FSx ONTAP para sistemas de armazenamento NetApp ONTAP , todos os quais podem fornecer armazenamento persistente para aplicativos em contêineres.
 
-Para mais informações, visite o site da NetApp https://www.netapp.com["aqui"] .
+Para obter mais informações, visite o link:https://www.netapp.com["Site da NetApp"^].
 
 
 
@@ -80,7 +80,7 @@ Para mais informações, visite o site da NetApp https://www.netapp.com["aqui"] 
 
 O Trident é um orquestrador de armazenamento de código aberto e totalmente compatível para contêineres e distribuições Kubernetes, incluindo o Anthos.
 
-Para mais informações, visite o site da Trident https://docs.netapp.com/us-en/trident/index.html["aqui"] .
+Para obter mais informações, visite o link:https://docs.netapp.com/us-en/trident/index.html["Documentação do Trident"^].
 
 
 
@@ -94,4 +94,4 @@ Esta seção é dedicada às personalizações que usuários do mundo real prova
 [[current-support-matrix-for-validated-releases]]
 == Matriz de suporte atual para versões validadas
 
-Ver https://cloud.google.com/anthos/docs/resources/partner-storage#netapp["aqui"] para a matriz de suporte para versões validadas.
+Veja link:https://cloud.google.com/anthos/docs/resources/partner-storage#netapp["Matriz de suporte de parceiros de storage Anthos"^] as versões validadas.

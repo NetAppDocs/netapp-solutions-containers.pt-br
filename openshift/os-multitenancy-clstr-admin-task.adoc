@@ -18,15 +18,17 @@ As seguintes tarefas são executadas pelo administrador de cluster do Red Hat Op
 
 . Efetue login no cluster Red Hat OpenShift como administrador do cluster.
 . Crie dois projetos correspondentes a projetos diferentes.
-+
-[source, console]
+
+
+[listing]
 ----
 oc create namespace project-1
 oc create namespace project-2
 ----
 . Crie a função de desenvolvedor para o projeto-1.
-+
-[source, console]
+
+
+[listing]
 ----
 cat << EOF | oc create -f -
 apiVersion: rbac.authorization.k8s.io/v1
@@ -82,15 +84,14 @@ rules:
 EOF
 ----
 
-
-
 NOTE: A definição de função fornecida nesta seção é apenas um exemplo.  As funções do desenvolvedor devem ser definidas com base nos requisitos do usuário final.
 
 . Da mesma forma, crie funções de desenvolvedor para o projeto-2.
 . Todos os recursos de armazenamento do OpenShift e NetApp geralmente são gerenciados por um administrador de armazenamento.  O acesso para administradores de armazenamento é controlado pela função de operador do Trident, criada quando o Trident é instalado.  Além disso, o administrador de armazenamento também precisa de acesso ao ResourceQuotas para controlar como o armazenamento é consumido.
 . Crie uma função para gerenciar ResourceQuotas em todos os projetos no cluster para anexá-la ao administrador de armazenamento.
-+
-[source, console]
+
+
+[listing]
 ----
 cat << EOF | oc create -f -
 kind: ClusterRole
@@ -123,8 +124,9 @@ ocp-project-1               ocp-project-1-user
 ocp-project-2               ocp-project-2-user
 ....
 . Configurar ClusterRoleBindings para administradores de armazenamento.
-+
-[source, console]
+
+
+[listing]
 ----
 cat << EOF | oc create -f -
 kind: ClusterRoleBinding
@@ -155,13 +157,12 @@ roleRef:
 EOF
 ----
 
-
-
 NOTE: Para administradores de armazenamento, duas funções devem ser vinculadas: trident-operator e resource-quotas.
 
 . Crie RoleBindings para desenvolvedores vincularem a função developer-project-1 ao grupo correspondente (ocp-project-1) no project-1.
-+
-[source, console]
+
+
+[listing]
 ----
 cat << EOF | oc create -f -
 kind: RoleBinding
@@ -179,7 +180,5 @@ roleRef:
   name: developer-project-1
 EOF
 ----
-
-
 . Da mesma forma, crie RoleBindings para desenvolvedores vinculando as funções de desenvolvedor ao grupo de usuários correspondente no projeto-2.
 

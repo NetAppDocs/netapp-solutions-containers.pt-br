@@ -1,0 +1,216 @@
+---
+sidebar: sidebar 
+permalink: vsphere-kubernetes-service/deploy-vks.html 
+keywords: vks, cluster, install, worker nodes, iscsi, nvme, custom image 
+summary: Instale um cluster do vSphere Kubernetes Service em seu ambiente VCF com a configuração de nó de trabalho apropriada. 
+---
+= Instale um cluster do vSphere Kubernetes Service
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+Instale um cluster do vSphere Kubernetes Service (VKS) em seu ambiente VCF 9.1 e configure os nós de trabalho com os utilitários de storage apropriados para suas cargas de trabalho.
+
+.Sobre esta tarefa
+Os utilitários NFS são instalados automaticamente nos nós de trabalho do cluster que você cria. Se você quiser criar nós de trabalho com utilitários iSCSI ou NVMe instalados, é necessário criar uma imagem OVA personalizada e usá-la para os nós de trabalho. A imagem personalizada pode ser criada usando o Docker, e a ferramenta de linha de comando  `vcf` pode ser usada para criar um arquivo OVA a partir dessa imagem. Esse arquivo OVA pode ser carregado na Content Library no vSphere. Ao criar o cluster VKS, essa imagem da Content Library pode ser selecionada para os pools de nós.
+
+.Passos
+. Crie o cluster VKS:
++
+Você pode criar um cluster VKS usando a imagem de nó de trabalho padrão ou uma imagem personalizada que você cria. A imagem de nó de trabalho padrão inclui utilitários NFS pré-instalados, enquanto a imagem personalizada pode incluir utilitários iSCSI e NVMe. As seguintes opções estão disponíveis:
+
++
+** *Somente NAS (padrão):* Crie um cluster VKS usando a imagem de nó de trabalho padrão, que inclui utilitários NFS pré-instalados.
+** *SAN habilitado (imagem personalizada):* Crie uma imagem Docker personalizada que inclua utilitários iSCSI e NVMe, gere um arquivo OVA usando a ferramenta de linha de comando  `vcf`, carregue o OVA na vSphere Content Library e, em seguida, crie o cluster VKS selecionando essa imagem personalizada para os pools de nós.
++
+.Mostrar instruções para criar um cluster do vSphere Kubernetes Service somente NAS com a imagem padrão do nó de trabalho
+[%collapsible]
+====
+Crie o cluster VKS usando a imagem de nó de trabalho padrão. Siga as instruções para especificar o nome do cluster, a configuração do pool de nós e outras configurações.
+
+No vSphere Client, acesse o namespace onde você deseja criar o cluster Kubernetes do vSphere. Na guia *Recursos* desse namespace, clique em *Criar cluster* na seção Kubernetes ou clique em *Ir para o serviço* e, em seguida, clique em *Criar cluster*.
+
+Preencha o formulário com os detalhes do cluster:
+
+*** Na seção 1, *Tipo de Configuração*, selecione *Custom*.
+*** Na seção 2, *Configurações Gerais*, forneça um nome para o cluster e deixe todas as outras configurações com seus valores padrão.
+*** Aceite todas as opções padrão para a seção 3.
+*** Na seção 4, *Pools de Nós*, clique nas reticências (...) ao lado do pool de nós e clique em *Editar*. Aumente o número de réplicas para 3 e selecione a versão mais recente do Ubuntu para a imagem do sistema operacional. Clique em *Avançar*, depois em *Revisar e Confirmar*.
+
+
+Após revisar os detalhes do cluster, clique em *Concluir*. O vSphere Kubernetes cluster será criado em alguns minutos.
+
+image::vks-create-001.png[Espaço de nomes em vCenter]
+
+image::vks-create-002.png[Criar tipo de configuração de cluster]
+
+image::vks-create-003.png[Criar cluster Configurações gerais]
+
+image::vks-create-004.png[Criar plano de controle do cluster]
+
+image::vks-create-005.png[Criar pools de nós de cluster]
+
+image::vks-create-006.png[Criar cluster Concluir]
+
+image::vks-create-007.png[Criação do cluster concluída]
+
+====
++
+.Mostrar instruções para criar uma imagem OVA personalizada para nós de trabalho habilitados para SAN
+[%collapsible]
+====
+Crie uma imagem Docker com os utilitários necessários instalados. O exemplo a seguir demonstra a criação de uma imagem Docker baseada no Ubuntu 24.04 com os utilitários iSCSI e Multipathing instalados.
+
+[source, docker]
+----
+#san-dockerfile.txt
+FROM ubuntu:24.04
+# Prevent interactive prompts during package installation
+ENV DEBIAN_FRONTEND=noninteractive
+# Install required system packages for iSCSI and Multipathing
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+    nvme-cli \
+    kmod \
+    linux-tools-common \
+    open-iscsi \
+    lsscsi \
+    sg3-utils \
+    multipath-tools \
+    scsitools  \
+    chrony \
+    networkd-dispatcher &&\
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+# Set iSCSI session scanning to manual as required by Trident
+RUN sed -i 's/^\(node.session.scan\).*/\1 = manual/' /etc/iscsi/iscsid.conf
+# Configure device-mapper-multipath with Trident recommendations
+RUN printf "defaults {\n    user_friendly_names yes\n    find_multipaths no\n}\n" > /etc/multipath.conf
+RUN mkdir -p /etc/networkd-dispatcher/off.d /etc/networkd-dispatcher/routable.d/
+CMD ["bash"]
+----
+Crie a imagem Docker usando:
+
+[source, docker]
+----
+docker build -f san-dockerfile.txt -t ubuntu-2404:san .
+----
+Se o registro Docker não estiver disponível, execute este comando para iniciar um registro local e enviar a imagem para ele:
+
+[source, docker]
+----
+docker run -d -p 5000:5000 --restart=always --name registry registry:2
+----
+Marque a imagem e envie-a.
+
+[source, docker]
+----
+docker tag ubuntu-2404:san localhost:5000/ubuntu-2404:san
+docker push localhost:5000/ubuntu-2404:san
+----
+Crie o arquivo de configuração da imagem (salve como  `ubuntu2404vkr135-san.yml`) e faça referência à imagem:
+
+[source, yaml]
+----
+#ubuntu2404vkr135-san.yml
+apiVersion: imageconfiguration.vmware.com/v1alpha1
+kind: Image
+metadata:
+    name: ubuntu-2404-amd64-v1.35.5---vmware.1-vkr.1
+spec:
+    osSpec:
+        name: ubuntu
+        version: "24.04"
+        image: "localhost:5000/ubuntu-2404:san"
+    kubernetesSpec:
+        image: projects.packages.broadcom.com/vsphere/iaas/kubernetes-release/1.35.5/kubernetes-distribution-image:v1.35.5_vmware.1-vkr.1
+    diskSize: 20Gi
+    repositorySpec:
+        debs:
+            - name: noble
+              url: http://archive.ubuntu.com/ubuntu
+              suites:
+                  - noble
+              components:
+                  - main
+                  - restricted
+                  - universe
+                  - multiverse
+            - name: noble-security
+              url: http://security.ubuntu.com/ubuntu
+              suites:
+                  - noble-security
+              components:
+                  - main
+                  - restricted
+                  - universe
+                  - multiverse
+    packages:
+      present:                  # Packages to install
+        - name: open-iscsi
+        - name: lsscsi
+        - name: sg3-utils
+        - name: multipath-tools
+        - name: scsitools
+        - name: nvme-cli
+    services:
+      - name: multipath-tools.service
+        status: enabled
+      - name: open-iscsi.service
+        status: enabled
+----
+
+NOTE: O nome dos metadados deve estar na lista pré-aprovada. Caso contrário, você receberá um erro como o mostrado abaixo ao tentar criar o arquivo OVA. A lista pré-aprovada pode ser encontrada na ajuda da CLI do VCF para o  `kr bake` comando.
+
+image::vks-006.png[Erro quando o nome dos metadados não está na lista pré-aprovada]
+
+Crie o arquivo OVA usando a CLI do VCF:
+
+[source, cli]
+----
+vcf kr bake -f <path/to/ubuntu2404vkr135-san.yml> --log-level DEBUG --log-format plain
+----
+Transfira o arquivo OVA usando SCP para um computador a partir do qual você possa carregá-lo para a vSphere Content Library.
+
+====
+
+
+. Após a instalação do cluster, localize-o no vCenter e faça o download do arquivo kubeconfig.
++
+.. Clique em *Gerenciamento de supervisores* no menu principal e selecione o namespace onde o seu cluster foi criado.
+.. Selecione a guia *Computação* e, em seguida, *Clusters do Kubernetes*. Todos os clusters no namespace são exibidos.
+.. Vá até a aba *Recursos*, selecione o cluster Kubernetes que você precisa e faça o download do seu arquivo kubeconfig.
++
+image::vks-001.png[Menu de Gerenciamento de Supervisores em vCenter]
+
++
+image::vks-002.png[Lista de clusters Kubernetes em vCenter]
+
++
+image::vks-003.png[Guia Resources]
+
++
+image::vks-004.png[Download do kubeconfig para um cluster]
+
+
+
+. A partir de um host bastion, conecte-se ao cluster usando o arquivo kubeconfig para gerenciá-lo pela linha de comando.
++
+image::vks-005.png[Conexão da linha de comando ao cluster VKS usando kubeconfig]
+
+
+
+
+
+[[video-demonstration]]
+== Demonstração em vídeo
+
+O vídeo a seguir demonstra a criação de um cluster Kubernetes vSphere.
+
+.Crie um cluster Kubernetes vSphere no cluster Supervisor
+video::4ef64b3c-7a68-41d5-bacf-b4a8012b49f8[panopto,width=360]

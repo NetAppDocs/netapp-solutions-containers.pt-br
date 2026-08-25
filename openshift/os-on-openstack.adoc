@@ -29,7 +29,7 @@ Para mais informações sobre o OSP, consulte olink:https://www.redhat.com/en/te
 
 Os serviços da plataforma OpenStack são implantados como contêineres, o que isola os serviços uns dos outros e permite atualizações fáceis.  A plataforma OpenStack usa um conjunto de contêineres criados e gerenciados com Kolla.  A implantação de serviços é realizada extraindo imagens de contêiner do Portal Personalizado do Red Hat.  Esses contêineres de serviço são gerenciados usando o comando Podman e são implantados, configurados e mantidos com o Red Hat OpenStack Director.
 
-image:redhat-openshift-034.png["Figura mostrando diálogo de entrada/saída ou representando conteúdo escrito"]
+image::redhat-openshift-034.png[Figura mostrando diálogo de entrada/saída ou representando conteúdo escrito]
 
 [cols="15%, 15%, 70%"]
 |===

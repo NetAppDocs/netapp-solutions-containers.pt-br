@@ -34,7 +34,7 @@ O Red Hat OpenShift Container Platform une o desenvolvimento e as operações de
 * *Segurança e catálogo de contêineres* O OpenShift oferece multilocação e protege o usuário contra execução de código prejudicial usando segurança estabelecida com Security-Enhanced Linux (SELinux), CGroups e Secure Computing Mode (seccomp) para isolar e proteger contêineres.  Ele também fornece criptografia por meio de certificados TLS para vários subsistemas e acesso a contêineres certificados pela Red Hat (access.redhat.com/containers) que são escaneados e classificados com ênfase específica em segurança para fornecer contêineres de aplicativos certificados, confiáveis e seguros aos usuários finais.
 
 
-image:redhat-openshift-004.png["Figura mostrando diálogo de entrada/saída ou representando conteúdo escrito"]
+image::redhat-openshift-004.png[Figura mostrando diálogo de entrada/saída ou representando conteúdo escrito]
 
 
 
@@ -55,13 +55,13 @@ A implantação da infraestrutura provisionada pelo instalador (IPI) do OpenShif
 . Visite o Red Hat OpenShiftlink:https://www.openshift.com["site"^] e faça login com suas credenciais SSO.
 . Selecione o ambiente no qual você gostaria de implantar o Red Hat OpenShift.
 +
-image:redhat-openshift-008.png["Figura mostrando diálogo de entrada/saída ou representando conteúdo escrito"]
+image::redhat-openshift-008.png[Figura mostrando diálogo de entrada/saída ou representando conteúdo escrito]
 
 . Na próxima tela, baixe o instalador, o pull secret exclusivo e as ferramentas CLI para gerenciamento.
 +
-image:redhat-openshift-009.png["Figura mostrando diálogo de entrada/saída ou representando conteúdo escrito"]
+image::redhat-openshift-009.png[Figura mostrando diálogo de entrada/saída ou representando conteúdo escrito]
 
-. Siga olink:https://docs.openshift.com/container-platform/4.7/installing/index.html["instruções de instalação"] fornecido pela Red Hat para implantação no ambiente de sua escolha.
+. Siga as link:https://docs.openshift.com/container-platform/4.7/installing/index.html["instruções de instalação"^] instruções fornecidas pela Red Hat para implantar no ambiente de sua escolha.
 
 
 

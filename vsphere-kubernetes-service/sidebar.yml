@@ -1,0 +1,20 @@
+---
+section: vsphere-kubernetes-service
+title: vSphere Kubernetes Service com o storage NetApp
+pdf-filename: vSphere Kubernetes Service com o storage NetApp
+entries:
+- title: Visão geral
+  pdf-filename: vSphere Serviço Kubernetes com armazenamento NetApp — visão geral
+  url: "/vsphere-kubernetes-service/vks-overview.html"
+- title: Introdução ao storage e ao serviço Kubernetes do vSphere
+  pdf-filename: Introdução ao storage e ao serviço Kubernetes do vSphere
+  entries:
+  - title: Implantar o vSphere Kubernetes Service
+    url: "/vsphere-kubernetes-service/deploy-vks.html"
+  - title: 'NetApp Storage: benefícios para cargas de trabalho do vSphere Kubernetes
+      Service'
+    url: "/vsphere-kubernetes-service/netapp-storage-vks.html"
+  - title: NetApp Storage provisioning para cargas de trabalho VKS
+    url: "/vsphere-kubernetes-service/install-trident.html"
+  - title: Implemente cargas de trabalho VKS usando o armazenamento NetApp
+    url: "/vsphere-kubernetes-service/deploy-vks-workloads.html"

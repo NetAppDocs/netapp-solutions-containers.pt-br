@@ -1,0 +1,323 @@
+---
+sidebar: sidebar 
+permalink: vsphere-kubernetes-service/deploy-vks-workloads.html 
+keywords: postgresql, deployment, pvc, ontap-nas, iscsi, container application 
+summary: Implante um aplicativo conteinerizado em um cluster VKS usando NetApp ONTAP storage persistente com protocolos NAS ou SAN. 
+---
+= Implante um aplicativo em contêiner com o NetApp storage persistente
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+Implante um aplicativo em contêiner no seu cluster do vSphere Kubernetes Service usando o NetApp ONTAP storage persistente. Os exemplos a seguir demonstram como implantar um banco de dados PostgreSQL usando storage NAS (ontap-nas) ou storage SAN iSCSI (ontap-san).
+
+A seguinte configuração YAML define POSTGRES_USER / POSTGRES_PASSWORD diretamente no manifesto. Em produção, recomenda-se usar os Segredos do Kubernetes para gerenciar informações sensíveis, como credenciais de banco de dados.
+
+[role="tabbed-block"]
+====
+.Implantar o PostgreSQL com storage NAS (driver ontap-nas)
+--
+Você pode implantar um aplicativo de contêiner PostgreSQL com suporte em um volume persistente NFS provisionado pelo driver ontap-nas. O exemplo a seguir demonstra como criar um PersistentVolumeClaim (PVC) e uma implantação para o PostgreSQL.
+
+[source, yaml]
+----
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: postgres-pvc
+spec:
+  storageClassName: sc-nas # Specify the StorageClass for dynamic provisioning
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres
+  template:
+    metadata:
+      labels:
+        app: postgres
+    spec:
+      securityContext:
+        fsGroup: 999  # Ensures proper permissions for the mounted volume (PostgreSQL default user is 999)
+      containers:
+        - name: postgres
+          image: postgres:15
+          securityContext:
+            allowPrivilegeEscalation: false
+            runAsNonRoot: true
+            runAsUser: 999  # PostgreSQL default user ID
+            capabilities:
+              drop:
+                - ALL
+            seccompProfile:
+              type: RuntimeDefault
+          env:
+            - name: POSTGRES_DB
+              value: "postgres"
+            - name: POSTGRES_USER
+              value: "<username>"
+            - name: POSTGRES_PASSWORD
+              value: "<password>"
+            - name: PGDATA
+              value: "/var/lib/postgresql/data/pgdata"
+          ports:
+            - containerPort: 5432
+          volumeMounts:
+            - mountPath: /var/lib/postgresql/data
+              name: postgres-storage
+              subPath: postgres-data  # Ensures data is stored in a subdirectory to avoid permission issues
+          resources:
+            requests:
+              memory: "512Mi"
+              cpu: "250m"
+            limits:
+              memory: "1Gi"
+              cpu: "500m"
+      volumes:
+        - name: postgres-storage
+          persistentVolumeClaim:
+            claimName: postgres-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres-service
+spec:
+  type: ClusterIP
+  ports:
+    - port: 5432
+      targetPort: 5432
+  selector:
+    app: postgres
+----
+--
+.Implante o PostgreSQL com storage SAN (driver iSCSI ontap-san)
+--
+Use o seguinte arquivo YAML para implantar um aplicativo de contêiner PostgreSQL com suporte em um volume persistente iSCSI provisionado pelo driver ontap-san. A estratégia de implantação  `Recreate` garante que o pod seja completamente encerrado antes que um novo seja iniciado, o que é necessário para volumes iSCSI ReadWriteOnce e evita corrupção de dados durante reinicializações do pod. Essa configuração oferece suporte à persistência de dados em casos de exclusão e recriação de pods e é compatível com snapshots de volume do Trident e operações de backup e restauração.
+
+[source, yaml]
+----
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: postgres-block-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 20Gi
+  storageClassName: sc-iscsi # Must map to an ontap-san driver
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres-block-app
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: postgres
+  template:
+    metadata:
+      labels:
+        app: postgres
+    spec:
+      # 1. POD LEVEL SECURITY CONTEXT
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 999       # Official Postgres image default user ID
+        runAsGroup: 999      # Official Postgres image default group ID
+        fsGroup: 999
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: postgres
+          image: postgres:15
+          # 2. CONTAINER LEVEL SECURITY CONTEXT
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+          env:
+            - name: POSTGRES_DB
+              value: "postgres"
+            - name: POSTGRES_USER
+              value: "<username>"
+            - name: POSTGRES_PASSWORD
+              value: "<password>"
+            - name: PGDATA
+              value: /var/lib/postgresql/data/pgdata
+          ports:
+            - containerPort: 5432
+              name: postgres
+          volumeMounts:
+            - mountPath: /var/lib/postgresql/data
+              name: postgres-block-storage
+              subPath: postgres-data
+          resources:
+            requests:
+              memory: "512Mi"
+              cpu: "250m"
+            limits:
+              memory: "1Gi"
+              cpu: "500m"
+      volumes:
+        - name: postgres-block-storage
+          persistentVolumeClaim:
+            claimName: postgres-block-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres-service
+spec:
+  type: ClusterIP
+  ports:
+    - port: 5432
+      targetPort: 5432
+  selector:
+    app: postgres
+----
+--
+====
+
+
+[[validate-the-database-deployment]]
+== Valide a implantação do banco de dados
+
+Após implantar a aplicação, verifique se os pods estão em execução e se o banco de dados está operacional. Use os seguintes comandos para verificar o status dos pods, PVCs e serviços. Certifique-se de que os pods estão em execução e que os PVCs estão vinculados aos volumes apropriados.
+
+[source, bash]
+----
+kubectl get all -n <namespace>
+kubectl get pvc -n <namespace>
+----
+image::vks-workload-001.png[Carga de trabalho implantada com storage persistente]
+
+Dependendo do protocolo utilizado, o storage de back-end é um volume, qtree ou LUN. Você pode verificar o storage provisionado no sistema ONTAP descrevendo o PersistentVolume (PV) para recuperar o nome interno do volume e, em seguida, usá-lo nos comandos da CLI do ONTAP para obter os detalhes do storage. Use o seguinte comando para descrever o PV e recuperar o nome interno do volume:
+
+[source, bash]
+----
+kubectl describe pv/<pv-name>
+----
+.Mostrar exemplo
+image::vks-workload-002.png[Nome interno do volume para o volume NAS]
+
+image::vks-workload-003.png[Nome interno do volume para SAN LUN]
+
+Copie o nome do volume interno da saída e execute o seguinte comando para obter os detalhes do storage a partir da CLI do ONTAP.
+
+Para volumes NAS:
+
+[source, cli]
+----
+volume show -vserver <vserver> -volume <internal-volume-name>
+----
+image::vks-workload-004.png[Saída da CLI do ONTAP para o volume NAS]
+
+Para LUNs SAN, execute o seguinte comando para obter os detalhes da LUN a partir da CLI do ONTAP:
+
+[source, cli]
+----
+lun show -vserver <vserver> -volume <internal-volume-name>
+----
+image::vks-workload-005.png[Saída da CLI do ONTAP para SAN LUN]
+
+Se você utilizou  `nconnect`opções de montagem na classe de storage NAS ou NAS Economy, você pode verificar o número de conexões TCP ativas do nó de trabalho para o servidor de storage.
+
+Primeiro, liste as configurações do back-end do Trident para encontrar o nome do back-end e, em seguida, descreva-o para recuperar o nome do vserver e o LIF de dados:
+
+[source, bash]
+----
+kubectl get tbc -n trident
+kubectl describe tbc <backend-name> -n trident
+----
+Em seguida, faça login no cluster ONTAP e execute o seguinte comando, substituindo o LIF de dados da saída acima:
+
+[source, cli]
+----
+network connections active show -local-address <data-lif> -local-port 2049
+----
+.Mostrar exemplo
+image::vks-workload-006.png[Saída da linha de comando do ONTAP para conexões ativas]
+
+Após os pods estarem em execução, conecte-se ao banco de dados e verifique as operações de dados.
+
+.Passos
+. Encaminhe a porta do serviço PostgreSQL para sua máquina local:
++
+[source, bash]
+----
+kubectl port-forward svc/postgres-service 5432:5432 -n <namespace>
+----
+. A partir de um terminal diferente, conecte-se ao banco de dados usando psql:
++
+[source, bash]
+----
+psql "postgresql://<username>:<password>@127.0.0.1:5432/postgres"
+----
+. Crie um banco de dados e uma tabela e, em seguida, preencha a tabela com dados:
++
+[source, sql]
+----
+CREATE DATABASE employee;
+----
++
+Alterne para o novo banco de dados (metacomando psql):
+
++
+[source, bash]
+----
+\c employee
+----
++
+Crie a tabela, insira uma linha e consulte os resultados:
+
++
+[source, sql]
+----
+CREATE TABLE employees (
+    id SERIAL PRIMARY KEY,
+    first_name VARCHAR(50) NOT NULL,
+    last_name VARCHAR(50) NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    department VARCHAR(50),
+    hire_date DATE DEFAULT CURRENT_DATE,
+    salary NUMERIC(10, 2)
+);
+
+INSERT INTO employees (first_name, last_name, email, department, salary)
+VALUES ('John', 'Doe', 'john.doe@example.com', 'Engineering', 85000.00);
+
+SELECT * FROM employees;
+----
+
+
+
+
+[[video-demonstration]]
+== Demonstração em vídeo
+
+O vídeo a seguir demonstra a instalação do Trident em um cluster Kubernetes vSphere e a implantação de um banco de dados PostgreSQL com storage persistente usando o Trident.
+
+.Implantando cargas de trabalho com o ONTAP storage persistente usando o Trident
+video::eb8bd0c0-a1fe-4288-a575-b4ac00e004a9[panopto,width=360]

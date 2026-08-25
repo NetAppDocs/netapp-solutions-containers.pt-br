@@ -62,7 +62,7 @@ A solução Red Hat OpenShift com NetApp é composta pelos seguintes componentes
 
 O Red Hat OpenShift Container Platform é uma plataforma Kubernetes empresarial totalmente suportada.  A Red Hat faz vários aprimoramentos no Kubernetes de código aberto para fornecer uma plataforma de aplicativos com todos os componentes totalmente integrados para criar, implantar e gerenciar aplicativos em contêineres.
 
-Para mais informações visite o site do OpenShift https://www.openshift.com["aqui"] .
+Para obter mais informações, visite o link:https://www.openshift.com["Site do Red Hat OpenShift"^].
 
 
 
@@ -71,7 +71,7 @@ Para mais informações visite o site do OpenShift https://www.openshift.com["aq
 
 A NetApp tem vários sistemas de armazenamento perfeitos para data centers empresariais e implantações de nuvem híbrida.  O portfólio da NetApp inclui os sistemas de armazenamento NetApp ONTAP, NetApp Element e NetApp e-Series, todos os quais podem fornecer armazenamento persistente para aplicativos em contêineres.
 
-Para mais informações, visite o site da NetApp https://www.netapp.com["aqui"] .
+Para obter mais informações, visite o link:https://www.netapp.com["Site da NetApp"^].
 
 
 
@@ -80,7 +80,7 @@ Para mais informações, visite o site da NetApp https://www.netapp.com["aqui"] 
 
 O Trident é um orquestrador de armazenamento de código aberto e totalmente suportado para contêineres e distribuições Kubernetes, incluindo o Red Hat OpenShift.
 
-Para mais informações, visite o site da Trident https://docs.netapp.com/us-en/trident/index.html["aqui"] .
+Para obter mais informações, visite o link:https://docs.netapp.com/us-en/trident/index.html["Documentação do Trident"^].
 
 
 

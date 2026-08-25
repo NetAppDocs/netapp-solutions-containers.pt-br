@@ -16,4 +16,4 @@ summary: Gerenciamento avançado de cluster para Kubernetes no Red Hat OpenShift
 [role="lead"]
 O Advanced Cluster Management for Kubernetes permite que os usuários criem recursos em um ou mais clusters gerenciados simultaneamente no console.  Por exemplo, se você tiver clusters OpenShift em diferentes sites com suporte a diferentes clusters NetApp ONTAP e quiser provisionar PVCs em ambos os sites, clique no sinal (+) na barra superior.  Em seguida, selecione os clusters nos quais você deseja criar o PVC, cole o YAML do recurso e clique em Criar.
 
-image:redhat-openshift-086.png["Criar recursos"]
+image::redhat-openshift-086.png[Criar recursos]

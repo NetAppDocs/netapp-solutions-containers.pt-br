@@ -1,0 +1,134 @@
+---
+sidebar: sidebar 
+permalink: vsphere-kubernetes-service/netapp-storage-vks.html 
+keywords: netapp, ONTAP, trident, persistent storage, kubernetes, vks 
+summary: Conheça os principais benefícios de usar o storage ONTAP da NetApp com cargas de trabalho do vSphere Kubernetes Service. 
+---
+= Saiba mais sobre o storage da NetApp para o vSphere Kubernetes Service
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+Usar o NetApp como storage para o vSphere Kubernetes Service (VKS) é uma combinação poderosa que aproveita as robustas soluções de storage do NetApp para aprimorar o desempenho, a escalabilidade e a confiabilidade das cargas de trabalho do Kubernetes. O NetApp Trident, um provisionador de storage dinâmico de código aberto para Kubernetes, é usado para integrar o storage às cargas de trabalho no vSphere Kubernetes Service.
+
+
+
+[[key-benefits-of-using-netapp-storage-with-vks]]
+== Principais benefícios de usar o armazenamento NetApp com VKS
+
+. *Provisionamento dinâmico de armazenamento:* NetApp Trident permite o provisionamento dinâmico de volumes de armazenamento, possibilitando que os pods do Kubernetes solicitem storage em tempo real, com base em suas necessidades.
+. *Storage persistente*: As soluções NetApp oferecem recursos de storage persistente, garantindo a durabilidade e a disponibilidade dos dados mesmo após reinicializações e falhas de pods.
+. *Alto desempenho:* As soluções de storage da NetApp, como o ONTAP, oferecem storage de alto desempenho com baixa latência, o que é ideal para aplicações com uso intensivo de E/S executadas no Kubernetes.
+. *Escalabilidade:* Os sistemas de armazenamento NetApp podem ser dimensionados para atender às demandas de cargas de trabalho crescentes do Kubernetes, suportando implantações em larga escala.
+. *Gerenciamento de dados:* NetApp oferece recursos avançados de gerenciamento de dados, incluindo snapshots, clonagem e replicação de dados, que podem ser benéficos para backup, recuperação de desastres e fluxos de trabalho de desenvolvimento.
+. *Suporte a várias nuvens e nuvem híbrida:* NetApp pode ter suas soluções de armazenamento implementadas em ambientes locais, de nuvem pública e de nuvem híbrida, proporcionando flexibilidade e consistência no gerenciamento de storage.
+
+
+
+
+[[netapp-ontap-integration-overview]]
+== NetApp ONTAP visão geral da integração
+
+NetApp ONTAP oferece armazenamento de nível empresarial com recursos como deduplicação de dados, compactação e criptografia. Você usa NetApp Trident para integrar o armazenamento NetApp ao Kubernetes. NetApp Trident é compatível com várias plataformas de armazenamento NetApp, incluindo o ONTAP local, o FSx para NetApp ONTAP na AWS, o Azure NetApp Files no Azure e o Google Cloud NetApp Volumes no Google Cloud.
+
+Você utiliza o Trident Protect para gerenciar a proteção de dados e a recuperação de desastres para suas cargas de trabalho do Kubernetes. O Trident Protect permite que você crie Snapshots, clones e replique dados em diferentes backends de armazenamento, garantindo que seus dados estejam seguros e possam ser recuperados em caso de falhas.
+
+
+
+[[key-features-of-trident]]
+=== Principais características do Trident
+
+**Conformidade com CSI** Garantindo compatibilidade com os recursos e padrões de armazenamento mais recentes do Kubernetes. **Configuração declarativa** Permitindo que você defina os requisitos de armazenamento em arquivos YAML, que são então gerenciados automaticamente pelo Trident. **Drivers** O Trident oferece suporte a drivers para os protocolos NFS, CIFS/SMB, iSCSI, FC e NVMe/TCP suportados pelo ONTAP. **Suporte a ambientes híbridos e várias nuvens** O Trident oferece suporte a drivers para storage ONTAP on-premises e serviço de storage gerenciado nos hiperescaladores, como FSx para NetApp ONTAP na AWS, Azure NetApp Files no Azure e Google Cloud NetApp Volumes no Google Cloud. **Gerenciamento avançado de dados** Aproveitando os recursos de Snapshot e clonagem do ONTAP para proteção eficiente de dados e provisionamento rápido de ambientes de teste e desenvolvimento.
+
+Para obter detalhes completos sobre o Trident, consulte o link:https://docs.netapp.com/us-en/trident/["Documentação do Trident"^].
+
+
+
+[[trident-protect]]
+== Trident Protect
+
+Trident Protect é instalado separadamente do Trident. Antes da implantação, verifique se sua plataforma Kubernetes, backend de armazenamento, componentes de Snapshot e storage de objetos atendem aos link:https://docs.netapp.com/us-en/trident/trident-protect/trident-protect-requirements.html["Requisitos do Trident Protect"^].
+
+
+
+[[key-features-of-trident-protect]]
+=== Principais características do Trident Protect
+
+**Backups automatizados** O Trident Protect permite backups automatizados e voltados a políticas de aplicativos Kubernetes, garantindo que eles sejam copiados regularmente sem intervenção manual.
+
+**Gerenciamento de Snapshots** Ele aproveita os recursos de snapshot do ONTAP para criar cópias frequentes de ponto no tempo de aplicativos em contêineres e VMs, fornecendo um mecanismo confiável de recuperação.
+
+**Criptografia do repositório de backup** O Trident Protect oferece suporte à criptografia baseada em senha para os repositórios de backup Restic e Kopia. Configure a criptografia de volume persistente e em trânsito separadamente nas camadas de storage e rede.
+
+**Conformidade e Auditoria** Oferece ferramentas e recursos que ajudam as organizações a atender aos requisitos de conformidade e realizar auditorias regulares de suas práticas de proteção de dados.
+
+**Recuperação de Desastres** integra-se aos recursos de replicação do ONTAP para fornecer soluções robustas de recuperação de desastres, garantindo a continuidade dos negócios mesmo diante de eventos catastróficos.
+
+Para obter detalhes completos sobre o Trident Protect, consulte o link:https://docs.netapp.com/us-en/trident/trident-protect/learn-about-trident-protect.html["Documentação do Trident Protect"^].
+
+
+
+[[netapp-ontap-hardware-models-and-protocols-supported]]
+== NetApp Modelos de hardware e protocolos ONTAP suportados
+
+NetApp ONTAP software é executado em diversos modelos de hardware, cada um projetado para atender a diferentes requisitos de desempenho e capacidade. Trident amplia seus recursos robustos para oferecer suporte a vários sistemas NetApp ONTAP, incluindo All Flash FAS (AFF), All SAN Array (ASA) e ASA R2. Esse suporte garante que as organizações possam aproveitar todo o potencial de suas soluções de storage de alto desempenho em ambientes conteinerizados.
+
+**Sistemas All Flash FAS (AFF)** Os sistemas AFF oferecem desempenho excepcional e baixa latência, tornando-os ideais para aplicações de alta demanda.
+
+**All SAN Array (ASA) Systems** Os sistemas ASA são projetados para ambientes SAN dedicados, oferecendo desempenho robusto e confiabilidade.
+
+**ASA R2 Systems** Os sistemas ASA R2 oferecem recursos e capacidades aprimorados para ambientes SAN.
+
+**AFX** NetApp AFX é uma arquitetura de storage all-flash desagregada, desenvolvida especificamente para cargas de trabalho de IA corporativas. Oferece NAS de alto desempenho, permitindo o escalonamento independente de computação e capacidade. Os sistemas de armazenamento AFX da NetApp diferem de outros sistemas baseados em ONTAP (ASA, AFF e FAS) na implementação de sua camada de storage. AFX utiliza um sistema de arquivos distribuído que permite alto desempenho e escalabilidade, enquanto outros sistemas baseados em ONTAP utilizam uma arquitetura de storage tradicional.
+
+. Protocolos suportados para AFF: NFS, CIFS/SMB, iSCSI, FC, NVMe/TCP
+. Protocolos suportados para ASA: iSCSI, FC, NVMe/TCP
+. Protocolos suportados para ASA R2: iSCSI, FC, NVMe/TCP
+. Protocolos suportados para AFX: a partir do Trident 25.10, apenas o protocolo NFS é suportado; o protocolo SMB não é suportado.
+
+
+
+
+[[trident-drivers-for-ontap-storage]]
+== Drivers Trident para storage ONTAP
+
+O Trident inclui os seguintes drivers CSI, cada um capaz de provisionar um volume no storage de backend.
+
+
+
+[[for-nas-protocols-on-supported-hardware-models]]
+=== Para protocolos NAS em modelos de hardware compatíveis
+
+. ontap-nas: Um PVC corresponde a um PV, que é um FlexVol volume dedicado.
+. ontap-nas-economy: Cada PV provisionado é uma qtree, com um número configurável de qtrees por FlexVol volume (o padrão é 200, configurável entre 50 e 300).
++
+Um PVC corresponde a um PV, que é uma qtree em um volume FlexVol compartilhado.
+
+
+
+
+NOTE: Você pode colocar todos os discos das VMs como qtrees em um único volume. No entanto, esteja ciente de que os recursos de Snapshot, clonagem e replicação não são suportados pelo Trident. Quando esses recursos são gerenciados pelo administrador de storage, eles não são granulares em nível de PV.
+
+. ontap-nas-flexgroup: Cada PV provisionado é um ONTAP FlexGroup, e todos os agregados atribuídos a um SVM são utilizados.
+
+
+
+
+[[for-san-protocols-on-supported-hardware-models]]
+=== Para protocolos SAN em modelos de hardware compatíveis
+
+. ontap-san: Um PVC corresponde a um PV, que é um LUN em um FlexVol volume dedicado.
+. ontap-san-economy: Um PVC corresponde a um PV, que é um LUN em um volume FlexVol compartilhado. Você pode ter vários LUNs no volume FlexVol compartilhado (o padrão é 100, configurável entre 50 e 200 LUNs/PVs por volume FlexVol).
+
+
+
+NOTE: Você pode colocar todos os discos das VMs como LUNs em um único volume. No entanto, este driver suporta Snapshots e Clones, mas não suporta replicação. Quando a replicação é gerenciada pelo administrador de storage, ela não é granular por PV.
+
+image::vks-trident-storage-001.png[Drivers Trident para storage ONTAP]
+
+Para obter a lista completa de recursos expostos pelos drivers do Trident e aqueles que devem ser aplicados pelo administrador de storage, consulte a seção link:https://docs.netapp.com/us-en/trident/trident-reco/integrate-trident.html#ontap-backend-drivers["Drivers de backend ONTAP"^] na documentação do Trident.

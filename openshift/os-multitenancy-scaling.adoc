@@ -20,24 +20,27 @@ Em uma configuração multilocatário, adicionar novos projetos com recursos de 
 . Navegar para `Storage -> Storage VMs` e clique `Add` .  Crie um novo SVM dedicado ao projeto-3.  Crie também uma conta vsadmin para gerenciar o SVM e seus recursos.
 
 
-image:redhat-openshift-042.png["Criar SVM para dimensionamento"]
+image::redhat-openshift-042.png[Criar SVM para dimensionamento]
 
 . Efetue login no cluster do Red Hat OpenShift como administrador do cluster.
 . Crie um novo projeto.
-+
-[source, console]
+
+
+[listing]
 ----
 oc create ns project-3
 ----
 . Certifique-se de que o grupo de usuários do projeto-3 seja criado no IdP e sincronizado com o cluster OpenShift.
-+
-[source, console]
+
+
+[listing]
 ----
 oc get groups
 ----
 . Crie a função de desenvolvedor para o projeto-3.
-+
-[source, console]
+
+
+[listing]
 ----
 cat << EOF | oc create -f -
 apiVersion: rbac.authorization.k8s.io/v1
@@ -93,13 +96,12 @@ rules:
 EOF
 ----
 
-
-
 NOTE: A definição de função fornecida nesta seção é apenas um exemplo.  A função do desenvolvedor deve ser definida com base nos requisitos do usuário final.
 
 . Crie RoleBinding para desenvolvedores no projeto-3 vinculando a função developer-project-3 ao grupo correspondente (ocp-project-3) no projeto-3.
-+
-[source, console]
+
+
+[listing]
 ----
 cat << EOF | oc create -f -
 kind: RoleBinding
@@ -119,8 +121,9 @@ EOF
 ----
 . Efetue login no cluster Red Hat OpenShift como administrador de armazenamento
 . Crie um backend Trident e mapeie-o para o SVM dedicado ao projeto-3.  A NetApp recomenda usar a conta vsadmin do SVM para conectar o backend ao SVM em vez de usar o administrador do cluster ONTAP .
-+
-[source, console]
+
+
+[listing]
 ----
 cat << EOF | tridentctl -n trident create backend -f
 {
@@ -136,16 +139,15 @@ cat << EOF | tridentctl -n trident create backend -f
 EOF
 ----
 
-
-
 NOTE: Estamos usando o driver ontap-nas para este exemplo.  Use o driver apropriado para criar o backend com base no caso de uso.
 
 
 NOTE: Assumimos que o Trident está instalado no projeto Trident.
 
 . Crie a classe de armazenamento para o projeto-3 e configure-a para usar os pools de armazenamento do backend dedicados ao projeto-3.
-+
-[source, console]
+
+
+[listing]
 ----
 cat << EOF | oc create -f -
 apiVersion: storage.k8s.io/v1
@@ -159,8 +161,9 @@ parameters:
 EOF
 ----
 . Crie um ResourceQuota para restringir recursos no projeto-3 solicitando armazenamento de classes de armazenamento dedicadas a outros projetos.
-+
-[source, console]
+
+
+[listing]
 ----
 cat << EOF | oc create -f -
 kind: ResourceQuota
@@ -175,10 +178,10 @@ spec:
 EOF
 ----
 . Aplique patch no ResourceQuotas em outros projetos para restringir o acesso de recursos nesses projetos ao armazenamento da classe de armazenamento dedicada ao projeto-3.
-+
-[source, console]
+
+
+[listing]
 ----
 oc patch resourcequotas project-1-sc-rq -n project-1 --patch '{"spec":{"hard":{ "project-3-sc.storageclass.storage.k8s.io/persistentvolumeclaims": 0}}}'
 oc patch resourcequotas project-2-sc-rq -n project-2 --patch '{"spec":{"hard":{ "project-3-sc.storageclass.storage.k8s.io/persistentvolumeclaims": 0}}}'
 ----
-

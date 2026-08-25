@@ -27,7 +27,7 @@ O RHV oferece os seguintes recursos:
 * *Segurança aprimorada* Herdadas do RHV, as tecnologias Secure Virtualization (sVirt) e Security Enhanced Linux (SELinux) são empregadas pelo RHV para fins de segurança elevada e reforço para hosts e VMs.  A principal vantagem desses recursos é o isolamento lógico de uma VM e seus recursos associados.
 
 
-image:redhat-openshift-003.png["Figura mostrando diálogo de entrada/saída ou representando conteúdo escrito"]
+image::redhat-openshift-003.png[Figura mostrando diálogo de entrada/saída ou representando conteúdo escrito]
 
 
 

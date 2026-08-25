@@ -25,7 +25,7 @@ Este documento descreverá como usar o NetApp ONTAP com o Red Hat OpenShift Serv
 
 **um.  Crie uma VolumeSnapshotClass Salve o seguinte manifesto em um arquivo chamado volume-snapshot-class.yaml
 
-[source]
+[source, yaml]
 ----
 apiVersion: snapshot.storage.k8s.io/v1
 kind: VolumeSnapshotClass
@@ -36,11 +36,11 @@ deletionPolicy: Delete
 ----
 Crie um snapshot usando o manifesto acima.
 
-image:redhat-openshift-container-rosa-020.png["classe de instantâneo"]
+image::redhat-openshift-container-rosa-020.png[classe de instantâneo]
 
 **b.  Em seguida, crie um snapshot** Crie um snapshot do PVC existente criando o VolumeSnapshot para fazer uma cópia de um momento específico dos seus dados do Postgresql.  Isso cria um instantâneo do FSx que ocupa quase nenhum espaço no backend do sistema de arquivos.  Salve o seguinte manifesto em um arquivo chamado volume-snapshot.yaml:
 
-[source]
+[source, yaml]
 ----
 apiVersion: snapshot.storage.k8s.io/v1
 kind: VolumeSnapshot
@@ -55,13 +55,13 @@ spec:
 
 Exclua o banco de dados para simular a perda de dados (a perda de dados pode ocorrer por vários motivos, aqui estamos apenas simulando isso excluindo o banco de dados)
 
-image:redhat-openshift-container-rosa-021.png["instantâneo de volume"]
+image::redhat-openshift-container-rosa-021.png[instantâneo de volume]
 
 **d.  Exclua o banco de dados para simular a perda de dados (a perda de dados pode ocorrer por vários motivos, aqui estamos apenas simulando isso excluindo o banco de dados)**
 
-image:redhat-openshift-container-rosa-022.png["conexão de banco de dados"]
+image::redhat-openshift-container-rosa-022.png[conexão de banco de dados]
 
-image:redhat-openshift-container-rosa-023.png["descartar banco de dados"]
+image::redhat-openshift-container-rosa-023.png[descartar banco de dados]
 
 
 
@@ -74,7 +74,7 @@ image:redhat-openshift-container-rosa-023.png["descartar banco de dados"]
 
 Para restaurar o volume ao seu estado anterior, você deve criar um novo PVC com base nos dados do instantâneo que você tirou.  Para fazer isso, salve o seguinte manifesto em um arquivo chamado pvc-clone.yaml
 
-[source]
+[source, yaml]
 ----
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -94,33 +94,33 @@ spec:
 ----
 Crie um clone do volume criando um PVC usando o snapshot como fonte usando o manifesto acima.  Aplique o manifesto e certifique-se de que o clone foi criado.
 
-image:redhat-openshift-container-rosa-024.png["clone postgresql a partir de snapshot"]
+image::redhat-openshift-container-rosa-024.png[clone postgresql a partir de snapshot]
 
 **b.  Excluir a instalação original do postgresql**
 
-image:redhat-openshift-container-rosa-025.png["excluir aplicativo postgresql"]
+image::redhat-openshift-container-rosa-025.png[excluir aplicativo postgresql]
 
 **c.  Crie um novo aplicativo postgresql usando o novo clone PVC**
 
-[source]
+[source, bash]
 ----
 $ helm install postgresql bitnami/postgresql --set primary.persistence.enabled=true --set primary.persistence.existingClaim=postgresql-volume-clone -n postgresql
 ----
-image:redhat-openshift-container-rosa-026.png["nova instalação do postgresql"]
+image::redhat-openshift-container-rosa-026.png[nova instalação do postgresql]
 
 **d.  Verifique se o pod do aplicativo está em execução**
 
-image:redhat-openshift-container-rosa-027.png["nova instalação do postgresql"]
+image::redhat-openshift-container-rosa-027.png[nova instalação do postgresql]
 
 **e.  Verifique se o pod usa o clone como seu PVC**
 
-image:redhat-openshift-container-rosa-028.png["descrição da nova instalação do postgresql"]
+image::redhat-openshift-container-rosa-028.png[descrição da nova instalação do postgresql]
 
-image:redhat-openshift-container-rosa-029.png["o novo pvc é o clone"]
+image::redhat-openshift-container-rosa-029.png[o novo pvc é o clone]
 
 f) Para validar se o banco de dados foi restaurado conforme o esperado, volte ao console do contêiner e mostre os bancos de dados existentes
 
-image:redhat-openshift-container-rosa-030.png["banco de dados restaurado"]
+image::redhat-openshift-container-rosa-030.png[banco de dados restaurado]
 
 
 

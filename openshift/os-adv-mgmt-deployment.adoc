@@ -19,38 +19,38 @@ Para instalar o Advanced Cluster Management for Kubernetes em um cluster OpenShi
 . Escolha um cluster OpenShift como o cluster central e faça login nele com privilégios de administrador de cluster.
 . Navegue até Operadores > Hub de Operadores e pesquise por Gerenciamento Avançado de Cluster para Kubernetes.
 +
-image:redhat-openshift-066.png["Azulejo ACM"]
+image::redhat-openshift-066.png[Azulejo ACM]
 
 . Selecione Gerenciamento avançado de cluster para Kubernetes e clique em Instalar.
 +
-image:redhat-openshift-067.png["Detalhes do ladrilho ACM"]
+image::redhat-openshift-067.png[Detalhes do ladrilho ACM]
 
 . Na tela Instalar Operador, forneça os detalhes necessários (a NetApp recomenda manter os parâmetros padrão) e clique em Instalar.
 +
-image:redhat-openshift-068.png["Instalar o bloco Operador ACM"]
+image::redhat-openshift-068.png[Instalar o bloco Operador ACM]
 
 . Aguarde a conclusão da instalação do operador.
 +
-image:redhat-openshift-069.png["Instalação do operador ACM em andamento"]
+image::redhat-openshift-069.png[Instalação do operador ACM em andamento]
 
 . Após a instalação do operador, clique em Criar MultiClusterHub.
 +
-image:redhat-openshift-070.png["Operador ACM Multiclusterhub"]
+image::redhat-openshift-070.png[Operador ACM Multiclusterhub]
 
 . Na tela Criar MultiClusterHub, clique em Criar depois de fornecer os detalhes.  Isso inicia a instalação de um hub multicluster.
 +
-image:redhat-openshift-071.png["Criar tela de hub multicluster"]
+image::redhat-openshift-071.png[Criar tela de hub multicluster]
 
 . Depois que todos os pods passam para o estado Em execução no namespace open-cluster-management e o operador passa para o estado Bem-sucedido, o Advanced Cluster Management for Kubernetes é instalado.
 +
-image:redhat-openshift-072.png["Operador ACM instalado"]
+image::redhat-openshift-072.png[Operador ACM instalado]
 
 . Leva algum tempo para concluir a instalação do hub e, depois que isso for concluído, o hub MultiCluster passará para o estado Em execução.
 +
-image:redhat-openshift-073.png["Hub multicluster pronto"]
+image::redhat-openshift-073.png[Hub multicluster pronto]
 
 . Ele cria uma rota no namespace open-cluster-management.  Conecte-se à URL na rota para acessar o console do Advanced Cluster Management.
 +
-image:redhat-openshift-074.png["Rota do console ACM"]
+image::redhat-openshift-074.png[Rota do console ACM]
 
 
