@@ -36,4 +36,18 @@ video::571ced1a-58e8-4bf4-9c24-b4b10118bc22[panopto,width=360]
 == Implantando cargas de trabalho em um cluster VKS com o ONTAP storage persistente usando o Trident
 
 .Implantando cargas de trabalho em um cluster VKS com o ONTAP storage persistente usando o Trident
-video::eb8bd0c0-a1fe-4288-a575-b4ac00e004a9[panopto,width=360]
+video::ea2cd302-d556-4450-bd68-b4c0012a9b49[panopto,width=360]
+
+
+[[backup-workloads-on-a-vks-cluster-to-object-store-and-restore-using-netapp-console]]
+== Fazer backup de cargas de trabalho em um cluster VKS para o Storage de Objetos e restaurar usando o NetApp Console
+
+.Fazer backup de cargas de trabalho em um cluster VKS para o Storage de Objetos e restaurar usando o NetApp Console
+video::02f61f3c-ae52-4f0b-9fe7-b4c0012ac7d8[panopto,width=360]
+
+
+[[netapp-console-local-overview]]
+== NetApp Console Visão geral local
+
+.NetApp Console Visão geral local
+video::5a0bdd54-7d38-494a-a224-b4b60011547f[panopto,width=360]
